@@ -76,7 +76,7 @@ $(function () {
                 };
             }
 
-	  		console.log(obj);
+	  		console.log(graph);
 
 	  		$('#container').highcharts({
 	        chart: {
