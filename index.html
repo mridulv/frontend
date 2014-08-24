@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 101 Template</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- include css file here-->
+    <link rel="stylesheet" href="css/slider.css"/>
+    <link rel="stylesheet" href="css/jquery-ui.css">
+
+    <!-- below line is used for google font-->
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
+
+    <script src="js/slider.js"></script>
+    <style>
+        .field{
+            max-width : 280px;
+            margin-top : 10px;
+        }
+        .ui-autocomplete {
+            padding: 0;
+            list-style: none;
+            background-color: #fff;
+            border: 1px solid #B0BECA;
+            max-height: 350px;
+        }
+        .ui-autocomplete .ui-menu-item {
+            border-top: 1px solid #B0BECA;
+            display: block;
+            padding: 4px 6px;
+            color: #353D44;
+            cursor: pointer;
+        }
+        .ui-autocomplete .ui-menu-item:first-child {
+            border-top: none;
+        }
+        .ui-autocomplete .ui-menu-item.ui-state-focus {
+            background-color: #D5E5F4;
+            color: #161A1C;
+        }
+    </style>
+
+</head>
+<body>
+<p>Twitter Analytics</p>
+<div id="container"></div>
+
+<div id="slider" style="right:-342px;">
+    <div id="sidebar" onclick="open_panel()">
+        <img src="images/contact.png"/>
+    </div>
+    <div id="header">
+        <div class="container">
+            <div class="row">
+                </br>
+                <label class="radio-inline">
+                    <input name="radioGroup" id="radio1" value="single" checked="checked" type="radio"> Single Entity
+                </label>
+                <label class="radio-inline">
+                    <input name="radioGroup" id="radio2" value="double" type="radio"> Compare Entities
+                </label>
+            </div>
+            </br>
+            <strong>Entity</strong>
+                <input id="entity1" type="text" class="form-control field" placeholder="Entity Name">
+                <input id="entity2" style="display:none;" type="text" class="form-control field entity" placeholder="Entity to Compare With">
+            </br>
+            <strong>Time Period</strong>
+            <input type="text" class="form-control field" id="datepicker_1" placeholder="Starting Date">
+            <input type="text" class="form-control field" id="datepicker_2" placeholder="End Date">
+            </br>
+            <strong>Geographical Location</strong>
+            <select id="country" class="form-control field" name="Country" autofocus="autofocus" placeholder="Select a Country">
+                <option value="World" data-alternative-spellings="World">World</option>
+                <option value="Afghanistan" data-alternative-spellings="AF افغانستان">Afghanistan</option>
+                <option value="Åland Islands" data-alternative-spellings="AX Aaland Aland" data-relevancy-booster="0.5">Åland Islands</option>
+                <option value="Albania" data-alternative-spellings="AL">Albania</option>
+                <option value="Zimbabwe" data-alternative-spellings="ZW">Zimbabwe</option>
+            </select>
+            </br>
+            <strong>Social Group</strong>
+            <select id="gender" class="form-control field" name="gender" autofocus="autofocus">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="all">All</option>
+            </select>
+            <button id="click" type="button" class="btn btn-default btn-lg field">Submit</button>
+        </div>
+    </div>
+</div>
+<div id="slider-left" style="left:-342px;">
+    <div id="sidebar-left" onclick="open_panel_left()">
+        <img src="images/contact.png"/>
+    </div>
+    <div id="header-left">
+        <input type="text" class="form-control" id="datepicker1" placeholder="Starting Date">
+        <input type="text" class="form-control" id="datepicker2" placeholder="End Date">
+        <button id="click1" type="submit" class="btn btn-default">Click</button>
+        <button id="map" class="btn btn-default">Click to view the map</button>
+
+    </div>
+</div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+<script src="js/index.js"></script>
+<script src="http://d3js.org/d3.v3.js"></script>
+<script src="js/highcharts/highcharts.js"></script>
+<script src="js/highcharts/highcharts-3d.js"></script>
+<script src="js/highcharts/modules/exporting.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script src= "js/datamaps.world.min.js"></script>
+<script src="js/jquery.select-to-autocomplete.js"></script>
+</body>
+</html>
