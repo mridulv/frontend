@@ -196,8 +196,11 @@ $(function () {
 
         if (graph_val == 'pie'){
 
+
+            var pie_val = $("input[name=radioGroup3]:checked").val();
+            console.log(pie_val);
             var str = "http://localhost:8080/pie";
-            var jsonObject = {entity: entity_val.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString()};
+            var jsonObject = {entity: entity_val.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString(),pie:pie_val.toString()};
 
             if ($("input[name=radioGroup]:checked").val() == 'double') {
                 str = "http://localhost:8080/piecompare";
@@ -238,20 +241,8 @@ $(function () {
                     },
                     series: [{
                         type: 'pie',
-                        name: 'Browser share',
-                        data: [
-                            ['Firefox',   45.0],
-                            ['IE',       26.8],
-                            {
-                                name: 'Chrome',
-                                y: 12.8,
-                                sliced: true,
-                                selected: true
-                            },
-                            ['Safari',    8.5],
-                            ['Opera',     6.2],
-                            ['Others',   0.7]
-                        ]
+                        name: 'Value',
+                        data: map_data
                     }]
                 });
             });
