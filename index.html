@@ -41,15 +41,26 @@
             background-color: #D5E5F4;
             color: #161A1C;
         }
+        #container {
+            z-index: 100;
+            height : 500px;
+        }
+        .container{
+            width : 300px;
+        }
+        #prop{
+            display: none;
+        }
     </style>
 
 </head>
 <body>
 <p>Twitter Analytics</p>
+
 <div id="container"></div>
 
 <div id="slider" style="right:-342px;">
-    <div id="sidebar" onclick="open_panel()">
+    <div id="sidebar" onclick="open_panel();open_panel_left();">
         <img src="images/contact.png"/>
     </div>
     <div id="header">
@@ -75,16 +86,17 @@
             <strong>Geographical Location</strong>
             <select id="country" class="form-control field" name="Country" autofocus="autofocus" placeholder="Select a Country">
                 <option value="World" data-alternative-spellings="World">World</option>
-                <option value="Afghanistan" data-alternative-spellings="AF افغانستان">Afghanistan</option>
-                <option value="Åland Islands" data-alternative-spellings="AX Aaland Aland" data-relevancy-booster="0.5">Åland Islands</option>
-                <option value="Albania" data-alternative-spellings="AL">Albania</option>
-                <option value="Zimbabwe" data-alternative-spellings="ZW">Zimbabwe</option>
+                <option value="AF" data-alternative-spellings="AF">Afghanistan</option>
+                <option value="AX" data-alternative-spellings="AX" data-relevancy-booster="0.5">Åland Islands</option>
+                <option value="AL" data-alternative-spellings="AL">Albania</option>
+                <option value="US" data-alternative-spellings="US">United States</option>
+                <option value="ZW" data-alternative-spellings="ZW">Zimbabwe</option>
             </select>
             </br>
             <strong>Social Group</strong>
             <select id="gender" class="form-control field" name="gender" autofocus="autofocus">
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
                 <option value="all">All</option>
             </select>
             <button id="click" type="button" class="btn btn-default btn-lg field">Submit</button>
@@ -92,19 +104,76 @@
     </div>
 </div>
 <div id="slider-left" style="left:-342px;">
-    <div id="sidebar-left" onclick="open_panel_left()">
+    <div id="sidebar-left" style="z-index: 10;" onclick="open_panel_left()">
         <img src="images/contact.png"/>
     </div>
     <div id="header-left">
-        <input type="text" class="form-control" id="datepicker1" placeholder="Starting Date">
-        <input type="text" class="form-control" id="datepicker2" placeholder="End Date">
-        <button id="click1" type="submit" class="btn btn-default">Click</button>
-        <button id="map" class="btn btn-default">Click to view the map</button>
-
+        <div class="container">
+            <strong>Analysis</strong>
+            </br>
+            </br>
+            <div class="new">
+                <label class="radio-inline">
+                    <input name="radioGroup1" id="radio1l" value="mention" checked="checked" type="radio"> Graph For Mentions
+                </label>
+                </br>
+                <label class="radio-inline">
+                    <input name="radioGroup1" id="radio2l" value="positive" type="radio"> Graph for Positive Sentiments
+                </label>
+                </br>
+                <label class="radio-inline">
+                    <input name="radioGroup1" id="radio3l" value="negative" type="radio"> Graph for Negative Sentiments
+                </label>
+                </br>
+                <label class="radio-inline">
+                    <input name="radioGroup1" id="radio4l" value="popularity" type="radio"> Graph for Popularity
+                </label>
+                </br>
+            </div>
+            </br>
+            </br>
+            <strong>Graph</strong>
+            </br>
+            </br>
+            <div class="new">
+                <label class="radio-inline">
+                    <input name="radioGroup2" id="radiow1l" value="timeline" checked="checked" type="radio"> Timeline Graph
+                </label>
+                </br>
+                <label class="radio-inline">
+                    <input name="radioGroup2" id="radiow2l" value="map" type="radio"> Map Graph
+                </label>
+                </br>
+                <label class="radio-inline">
+                    <input name="radioGroup2" id="radiow3l" value="pie" type="radio"> Pie Graph
+                </label>
+                </br>
+            </div>
+            </br>
+            </br>
+            <div class="new" id="prop">
+                <strong>Pie Graphs</strong>
+                </br>
+                </br>
+                <label class="radio-inline">
+                    <input name="radioGroup3" id="radioq1l" value="geo" checked="checked" type="radio"> Geography Wise
+                </label>
+                </br>
+                <label class="radio-inline">
+                    <input name="radioGroup3" id="radioq2l" value="gender" type="radio"> Gender Wise
+                </label>
+                </br>
+                <label class="radio-inline">
+                    <input name="radioGroup3" id="radioq3l" value="day" type="radio"> Day Wise
+                </label>
+                </br>
+            </div>
+        </div>
     </div>
 </div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="css/jquery-jvectormap-1.2.2.css" type="text/css" media="screen"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -118,5 +187,7 @@
 <script src="http://d3js.org/topojson.v1.min.js"></script>
 <script src= "js/datamaps.world.min.js"></script>
 <script src="js/jquery.select-to-autocomplete.js"></script>
+<script src="js/jquery-jvectormap-1.1.1.min.js"></script>
+<script src="js/jquery-jvectormap-world-mill-en.js"></script>
 </body>
 </html>
