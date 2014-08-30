@@ -55,7 +55,7 @@ a.setAttribute("onclick","open_panel_left()");
 function slideIn()
 {
 	var slidingDiv = document.getElementById("slider");
-	var stopPosition = -342;
+	var stopPosition = -442;
 	
 	if (parseInt(slidingDiv.style.right) > stopPosition )
 	{
