@@ -3,6 +3,12 @@ $(function () {
     $( "#datepicker_1" ).datepicker({ dateFormat: 'yy-mm-dd' });
     $( "#datepicker_2" ).datepicker({ dateFormat: 'yy-mm-dd' });
 
+    $('#container2').click(function() {
+        close_panel();
+    });
+
+    $('.accordion').accordion({defaultOpen: 'section1'});
+
     $('input[name="radioGroup"]').click(function(){
         var selected = $("input[name=radioGroup]:checked").val();
         console.log(selected);
@@ -14,8 +20,8 @@ $(function () {
         }
     });
 
-    $('#graph').change(function(){
-        var selected = $("#graph :selected").val();
+    $('input[name="radioGroup2"]').click(function(){
+        var selected = $("input[name=radioGroup2]:checked").val();
         console.log(selected);
         if (selected != 'pie'){
             $("#prop").hide("slow");
@@ -26,13 +32,14 @@ $(function () {
     });
 
   	$('#click').click(function(){
+        close_panel();
   		var date_in = $('#datepicker_1').datepicker({ dateFormat: 'yy-mm-dd' }).val();
   		var date_out = $('#datepicker_2').datepicker({ dateFormat: 'yy-mm-dd' }).val();
 		var entity_val = $("#entity1").val();
 		var gender_val = $("#gender :selected").val();
 		var country_val = $("#country :selected").val();
         var analysis_val = $("#analysis :selected").val();
-        var graph_val = $("#graph :checked").val();
+        var graph_val = $("#graph :selected").val();
 
 		var date1 = new Date(date_in.toString());
 		var date2 = new Date(date_out.toString());
@@ -167,18 +174,20 @@ $(function () {
                 var map_data1 = map_data[0];
 
                 console.log(map_data1);
-
+                var gdpData = {
+                    "AF": 16.63,
+                    "AL": 11.58,
+                    "DZ": 158.97
+                };
                 $("#container").empty();
                 $('#container').vectorMap({
                     map: 'world_mill_en',
                     series: {
-                        regions: [
-                            {
-                                values: map_data1,
-                                scale: ['#C8EEFF', '#0071A4'],
-                                normalizeFunction: 'polynomial'
-                            }
-                        ]
+                        regions: [{
+                            values: map_data1,
+                            scale: ['#C8EEFF', '#0071A4'],
+                            normalizeFunction: 'polynomial'
+                        }]
                     },
                     onRegionLabelShow: function (e, el, code) {
                         var str_map = ' (Number of Mentions from ' + code + ' are - ' + map_data1[code];
@@ -195,7 +204,8 @@ $(function () {
 
         if (graph_val == 'pie'){
 
-            var pie_val = $("#pie :selected").val();
+
+            var pie_val = $("input[name=radioGroup3]:checked").val();
             console.log(pie_val);
             var str = "http://localhost:8080/pie";
             var jsonObject = {entity: entity_val.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString(),pie:pie_val.toString()};
@@ -245,19 +255,6 @@ $(function () {
                 });
             });
         }
-
-        var str = "http://localhost:8080/trending";
-        var jsonObject = {entity: entity_val.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString()};
-
-        $.get(str, jsonObject).done(function (data) {
-
-            var obj = jQuery.parseJSON(data);
-            console.log(obj);
-            $("#trends").empty();
-            for (var i = 0; i < obj.length; i++) {
-                $("#trends").append("<li>Keyword is " + obj[i].keyword + " and value is " + obj[i].value + "</li>");
-            }
-        });
     });
 
 /* 	var country = new Array("USA","RUS","CAN","BRA","ARG","COL","AUS","ZAF","MAD");

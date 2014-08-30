@@ -21,7 +21,7 @@ function slideIt()
 	
 	if (parseInt(slidingDiv.style.right) < stopPosition )
 	{
-		slidingDiv.style.right = parseInt(slidingDiv.style.right) + 2 + "px";
+		slidingDiv.style.right = parseInt(slidingDiv.style.right) + 4 + "px";
 		setTimeout(slideIt, 1);	
 	}
 }
@@ -33,7 +33,7 @@ function slideIt_left()
 	
 	if (parseInt(slidingDiv.style.left) < stopPosition )
 	{
-		slidingDiv.style.left = parseInt(slidingDiv.style.left) + 2 + "px";
+		slidingDiv.style.left = parseInt(slidingDiv.style.left) + 4 + "px";
 		setTimeout(slideIt_left, 1);	
 	}
 }
@@ -59,7 +59,7 @@ function slideIn()
 	
 	if (parseInt(slidingDiv.style.right) > stopPosition )
 	{
-		slidingDiv.style.right = parseInt(slidingDiv.style.right) - 2 + "px";
+		slidingDiv.style.right = parseInt(slidingDiv.style.right) - 4 + "px";
 		setTimeout(slideIn, 1);	
 	}
 }
