@@ -3,11 +3,12 @@ $(function () {
     $( "#datepicker_1" ).datepicker({ dateFormat: 'yy-mm-dd' });
     $( "#datepicker_2" ).datepicker({ dateFormat: 'yy-mm-dd' });
 
-    $('#container2').click(function() {
-        close_panel();
-    });
-
     $('.accordion').accordion({defaultOpen: 'section1'});
+
+    $('.vticker').easyTicker({
+        visible: 1,
+        interval: 7000
+    });
 
     $('input[name="radioGroup"]').click(function(){
         var selected = $("input[name=radioGroup]:checked").val();
@@ -32,7 +33,6 @@ $(function () {
     });
 
   	$('#click').click(function(){
-        close_panel();
   		var date_in = $('#datepicker_1').datepicker({ dateFormat: 'yy-mm-dd' }).val();
   		var date_out = $('#datepicker_2').datepicker({ dateFormat: 'yy-mm-dd' }).val();
 		var entity_val = $("#entity1").val();
@@ -50,6 +50,22 @@ $(function () {
         console.log(country_val);
         console.log(analysis_val);
         console.log(graph_val);
+
+        $(".vticker ul").empty();
+
+        setInterval(function(){
+            var str = "http://localhost:8080/ticker";
+            var jsonObject = {entity: entity_val.toString()};
+            $.get(str,jsonObject).done(function(data) {
+                console.log(data);
+                if (data != 'empty') {
+                    $(".vticker ul").append('<li>it is now ' + data + '</li>');
+                }
+                else
+                    console.log("empty");
+            });
+        }, 1000);
+
 
         if (graph_val == 'timeline') {
 

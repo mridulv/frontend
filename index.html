@@ -43,11 +43,6 @@
         #prop{
             display: none;
         }
-        #trends{
-            margin-top: 30px;
-            max-height: 200px;
-            overflow-y: scroll;
-        }
         #click{
             position: absolute;
             margin-bottom: 20px;
@@ -109,6 +104,45 @@
             z-index: 10;
             opacity: 1;
         }
+        .vticker {
+            position: fixed;
+            top : 620px;
+            left : 130px;
+            font-family: Arial, sans-serif;
+            border: 1px solid #C20;
+            margin: 50px 0;
+            font-style: italic;
+            position: relative;
+            padding: 0 0 0 80px;
+            box-shadow: 0 2px 5px -3px #000;
+            border-radius: 3px;
+            opacity: 1;
+        }
+        .vticker:before {
+            content: "Latest News";
+            display: inline-block;
+            font-style: normal;
+            background: #C20;
+            padding: 10px;
+            color: #FFF;
+            font-weight: bold;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .vticker:after {
+            content: '';
+            display: block;
+            top: 0;
+            left: 80px;
+            background: linear-gradient(#FFF, rgba(255, 255, 255, 0));
+            height: 20px;
+        }
+        .vticker ul li {
+            list-style: none;
+            padding: 10px 0;
+        }
+
     </style>
 
 </head>
@@ -255,6 +289,12 @@
     </div>
 </div>
 
+<div class="vticker">
+    <ul>
+        <li>Enter the Twitter Handle</li>
+    </ul>
+</div>
+
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" href="css/jquery-jvectormap-1.2.2.css" type="text/css" media="screen"/>
@@ -262,6 +302,8 @@
 <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.easing.min.js"></script>
+<script src="js/jquery.easy-ticker.js"></script>
 <script src="js/index.js"></script>
 <script src="js/highcharts/highcharts.js"></script>
 <script src="js/highcharts/highcharts-3d.js"></script>
