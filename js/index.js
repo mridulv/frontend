@@ -1,5 +1,5 @@
 $(function () {
-
+    var serverAddress = "http://172.16.153.107:8080/"
     $( "#datepicker_1" ).datepicker({ dateFormat: 'yy-mm-dd' });
     $( "#datepicker_2" ).datepicker({ dateFormat: 'yy-mm-dd' });
 
@@ -54,7 +54,7 @@ $(function () {
         $(".vticker ul").empty();
 
         setInterval(function(){
-            var str = "http://localhost:8080/ticker";
+            var str = serverAddress + "ticker";
             var jsonObject = {entity: entity_val.toString()};
             $.get(str,jsonObject).done(function(data) {
                 console.log(data);
@@ -69,11 +69,11 @@ $(function () {
 
         if (graph_val == 'timeline') {
 
-            var str = "http://localhost:8080/graph";
+            var str = serverAddress + "graph";
             var jsonObject = {entity: entity_val.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString()};
 
             if ($("input[name=radioGroup]:checked").val() == 'double') {
-                str = "http://localhost:8080/graphcompare";
+                str = serverAddress + "graphcompare";
                 var entity_val2 = $("#entity2").val();
                 jsonObject = {entity: entity_val.toString(), entity2: entity_val2.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString()};
             }
@@ -174,12 +174,12 @@ $(function () {
         if (graph_val == 'map'){
 
             var set = 0;
-            var str = "http://localhost:8080/map";
+            var str = serverAddress + "map";
             var jsonObject = {entity: entity_val.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString()};
 
             if ($("input[name=radioGroup]:checked").val() == 'double') {
                 set = 1;
-                str = "http://localhost:8080/mapcompare";
+                str = serverAddress + "mapcompare";
                 var entity_val2 = $("#entity2").val();
                 jsonObject = {entity: entity_val.toString(), entity2: entity_val2.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString()};
             }
@@ -223,11 +223,11 @@ $(function () {
 
             var pie_val = $("input[name=radioGroup3]:checked").val();
             console.log(pie_val);
-            var str = "http://localhost:8080/pie";
+            var str = serverAddress + "pie";
             var jsonObject = {entity: entity_val.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString(),pie:pie_val.toString()};
 
             if ($("input[name=radioGroup]:checked").val() == 'double') {
-                str = "http://localhost:8080/piecompare";
+                str = serverAddress + "piecompare";
                 var entity_val2 = $("#entity2").val();
                 jsonObject = {entity: entity_val.toString(), entity2: entity_val2.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString()};
             }
