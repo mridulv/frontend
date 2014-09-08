@@ -1,7 +1,9 @@
 $(function () {
-    var serverAddress = "http://172.16.153.107:8080/"
-    $( "#datepicker_1" ).datepicker({ dateFormat: 'yy-mm-dd' });
-    $( "#datepicker_2" ).datepicker({ dateFormat: 'yy-mm-dd' });
+        var serverAddress = "http://172.16.153.107:8080/"
+        $('#date_picker_start').datepicker({
+        format: 'mm-dd-yyyy'});
+    $( "#date_picker_start" ).datepicker({ dateFormat: 'yy-mm-dd' });
+    $( "#date_picker_end" ).datepicker({ dateFormat: 'yy-mm-dd' });
 
     $('.accordion').accordion({defaultOpen: 'section1'});
 
@@ -14,10 +16,10 @@ $(function () {
         var selected = $("input[name=radioGroup]:checked").val();
         console.log(selected);
         if (selected == 'single'){
-            $("#entity2").hide("slow");
+            $("#entity_second").hide("slow");
         }
         else {
-            $("#entity2").show("slow");
+            $("#entity_second").show("slow");
         }
     });
 
@@ -32,10 +34,10 @@ $(function () {
         }
     });
 
-  	$('#click').click(function(){
-  		var date_in = $('#datepicker_1').datepicker({ dateFormat: 'yy-mm-dd' }).val();
-  		var date_out = $('#datepicker_2').datepicker({ dateFormat: 'yy-mm-dd' }).val();
-		var entity_val = $("#entity1").val();
+  	$('#button_go').click(function(){
+  		var date_in = $('#date_picker_start').datepicker({ dateFormat: 'yy-mm-dd' }).val();
+  		var date_out = $('#date_picker_end').datepicker({ dateFormat: 'yy-mm-dd' }).val();
+		var entity_val = $("#entity_first").val();
 		var gender_val = $("#gender :selected").val();
 		var country_val = $("#country :selected").val();
         var analysis_val = $("#analysis :selected").val();
@@ -53,18 +55,18 @@ $(function () {
 
         $(".vticker ul").empty();
 
-        setInterval(function(){
-            var str = serverAddress + "ticker";
-            var jsonObject = {entity: entity_val.toString()};
-            $.get(str,jsonObject).done(function(data) {
-                console.log(data);
-                if (data != 'empty') {
-                    $(".vticker ul").append('<li>it is now ' + data + '</li>');
-                }
-                else
-                    console.log("empty");
-            });
-        }, 1000);
+//        setInterval(function(){
+//            var str = serverAddress + "ticker";
+//            var jsonObject = {entity: entity_val.toString()};
+//            $.get(str,jsonObject).done(function(data) {
+//                console.log(data);
+//                if (data != 'empty') {
+//                    $(".vticker ul").append('<li>it is now ' + data + '</li>');
+//                }
+//                else
+//                    console.log("empty");
+//            });
+//        }, 1000);
 
 
         if (graph_val == 'timeline') {
@@ -74,7 +76,7 @@ $(function () {
 
             if ($("input[name=radioGroup]:checked").val() == 'double') {
                 str = serverAddress + "graphcompare";
-                var entity_val2 = $("#entity2").val();
+                var entity_val2 = $("#entity_second").val();
                 jsonObject = {entity: entity_val.toString(), entity2: entity_val2.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString()};
             }
 
@@ -83,7 +85,7 @@ $(function () {
 
                 console.log($("#country :selected").text());
                 console.log($("#gender :selected").text());
-                console.log($("#entity1").val());
+                console.log($("#entity_first").val());
 
                 var obj = jQuery.parseJSON(data);
                 var graph_data = new Array();
@@ -180,7 +182,7 @@ $(function () {
             if ($("input[name=radioGroup]:checked").val() == 'double') {
                 set = 1;
                 str = serverAddress + "mapcompare";
-                var entity_val2 = $("#entity2").val();
+                var entity_val2 = $("#entity_second").val();
                 jsonObject = {entity: entity_val.toString(), entity2: entity_val2.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString()};
             }
 
@@ -228,7 +230,7 @@ $(function () {
 
             if ($("input[name=radioGroup]:checked").val() == 'double') {
                 str = serverAddress + "piecompare";
-                var entity_val2 = $("#entity2").val();
+                var entity_val2 = $("#entity_second").val();
                 jsonObject = {entity: entity_val.toString(), entity2: entity_val2.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString()};
             }
 
