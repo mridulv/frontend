@@ -44,3 +44,24 @@
     right: 10px;
     top: 50%;
 }
+
+.navbar-default {
+    background-color: rgb(50, 118, 177);
+    border-color: rgb(40, 94, 142);
+}
+
+.navbar-default .navbar-brand {
+    color: #ffffff;
+}
+
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+    color: #ffffff;
+}
+
+.btn-primary {
+    background-color: rgb(50, 118, 177);
+}
+
+.btn-primary.active {
+    background-color: rgb(40, 94, 142);
+}

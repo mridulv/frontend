@@ -361,3 +361,21 @@ table.dataTable thead .sorting:after {
 .panel-yellow a:hover {
     color: #df8a13;
 }
+
+.panel-blue {
+    border-color:  rgb(50, 118, 177);
+}
+
+.panel-blue .panel-heading {
+    border-color:  rgb(50, 118, 177);
+    color: #fff;
+    background-color: rgb(50, 118, 177);
+}
+
+.panel-blue a {
+    color:  rgb(50, 118, 177);
+}
+
+.panel-blue a:hover {
+    color: #df8a13;
+}
