@@ -1,4 +1,5 @@
-var serverAddress = "http://172.16.137.125:8080/";
+//var serverAddress = "http://172.16.137.125:8080/";
+var serverAddress = "http://localhost:8080/";
 var date_in;
 var date_out;
 var entity_val;
@@ -29,15 +30,53 @@ function inactiveGraphButtons() {
     });
 }
 
+function getGenderVal(gender_val){
+    if (gender_val == 'Male')
+        return "male";
+    else if(gender_val == 'Female')
+        return "female";
+    else
+        return "all";
+}
+
+function getAnalysisVal(analysis_val){
+    if (analysis_val == 'Mentions')
+        return "mention";
+    else if(analysis_val == 'Positive Sentiments')
+        return "positive";
+    else if(analysis_val == 'Negative Sentiments')
+        return "negative";
+    else
+        return "popularity";
+}
+
+function getCountryVal(country_val){
+    if (country_val == 'World')
+        return "world";
+    else if(country_val == 'India')
+        return "IN";
+    else if(country_val == 'USA')
+        return "US";
+    else
+        return "DE";
+}
+
 $(document).ready(function () {
     $('#button_go').click(function () {
         date_in = $('#date_picker_start').datepicker({ dateFormat: 'yy-mm-dd' }).val();
         date_out = $('#date_picker_end').datepicker({ dateFormat: 'yy-mm-dd' }).val();
         entity_val = $("#entity_first").val();
-        gender_val = "all"//$("#gender").text();
+        gender_val = $("#gender").text();
         country_val = $("#country").text();
         analysis_val = $("#analysis").text();
         var group = document.getElementById("#graph_buttons");
+
+        analysis_val = getAnalysisVal(analysis_val);
+        country_val = getCountryVal(country_val);
+        gender_val = getGenderVal(gender_val);
+
+        drawSidebar();
+
         $('button', group).each(function () {
             var button = $(this);
             if (button.hasClass('active')) {
@@ -67,6 +106,47 @@ $(document).ready(function () {
         drawPieChart();
     });
 });
+
+function drawSidebar() {
+    var date1 = new Date(date_in.toString());
+    var date2 = new Date(date_out.toString());
+    var requestURL = serverAddress + "sidebar";
+    var jsonParams = {entity: entity_val.toString()};
+    console.log(jsonParams);
+    $.get(requestURL, jsonParams).done(function (data) {
+        var obj = jQuery.parseJSON(data);
+
+        var entity_information = obj[0];
+        var keywords = obj[1];
+        var hashtags = obj[2];
+        var trends = obj[3];
+
+        console.log(entity_information);
+        console.log(keywords);
+        console.log(hashtags);
+        console.log(trends);
+
+        var entity = entity_val.toString();
+        var followers = entity_information[0].followers;
+        var img = entity_information[0].image;
+        var rank = entity_information[0].rank;
+
+        $("#item").html(entity);
+        $("#rank").html("&nbsp;<i class='glyphicon glyphicon-tower'></i>&nbsp;"+rank);
+        $("#follow").html("<i class='glyphicon glyphicon-eye-open'></i>&nbsp;"+followers);
+        $("#img").html("<img src='"+img+"' class='img-responsive'>");
+
+        for (var i = 0; i < keywords.length; i++) {
+            $("#keyword").append("<li>"+keywords[i].key+"</li>");
+        }
+        for (var i = 0; i < hashtags.length; i++) {
+            $("#hashtag").append("<li>"+hashtags[i].key+"</li>");
+        }
+        for (var i = 0; i < trends.length; i++) {
+            $("#trend").append("<li>"+trends[i].key+"</li>");
+        }
+    });
+}
 
 function drawTimeline() {
     var date1 = new Date(date_in.toString());
