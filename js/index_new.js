@@ -15,14 +15,13 @@ $(function () {
 $(document.body).on('click', '.dropdown-menu li', function (event) {
     var $target = $(event.currentTarget);
     $target.closest('.btn-group')
-        .find('[data-bind="label"]').val($target.text())
+        .find('[data-bind="label"]').text($target.text())
         .end()
         .children('.dropdown-toggle').dropdown('toggle');
     return false;
 });
 
-function inactiveGraphButtons()
-{
+function inactiveGraphButtons() {
     var group = document.getElementById("#graph_buttons")
     $('button', group).each(function () {
         var button = $(this);
@@ -41,10 +40,8 @@ $(document).ready(function () {
         var group = document.getElementById("#graph_buttons");
         $('button', group).each(function () {
             var button = $(this);
-            if(button.hasClass('active'))
-            {
-                button.trigger();
-                return false;
+            if (button.hasClass('active')) {
+                button.click();
             }
         });
     });
@@ -113,7 +110,7 @@ function drawTimeline() {
         }
         console.log(graph);
 
-        $('#graph').highcharts({
+        $('#graph_container').highcharts({
             chart: {
                 zoomType: 'x'
             },
@@ -180,15 +177,9 @@ function drawMap() {
 
         var map_data = jQuery.parseJSON(data);
         var map_data1 = map_data[0];
-
         console.log(map_data1);
-        var gdpData = {
-            "AF": 16.63,
-            "AL": 11.58,
-            "DZ": 158.97
-        };
-        $("#graph").empty();
-        $('#graph').vectorMap({
+        $("#graph_container").empty();
+        $('#graph_container').vectorMap({
             map: 'world_mill_en',
             series: {
                 regions: [
@@ -212,10 +203,10 @@ function drawMap() {
     });
 }
 
-function drawPieChart()
-{
+function drawPieChart() {
     var pie_val = $("input[name=radioGroup3]:checked").val();
     console.log(pie_val);
+    pie_val = "0";
     var str = serverAddress + "pie";
     var jsonObject = {entity: entity_val.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString(), pie: pie_val.toString()};
 
@@ -230,8 +221,8 @@ function drawPieChart()
         var map_data = jQuery.parseJSON(data);
         console.log(map_data);
 
-        $("#container").empty();
-        $('#container').highcharts({
+        $("#graph_container").empty();
+        $('#graph_container').highcharts({
             chart: {
                 plotBackgroundColor: null,
                 plotBorderWidth: 1,//null,

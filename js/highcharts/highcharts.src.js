@@ -13593,7 +13593,7 @@ Series.prototype = {
 	},
 
 	/**
-	 * Return the graph path of a segment
+	 * Return the graph_container path of a segment
 	 */
 	getSegmentPath: function (segment) {
 		var series = this,
@@ -13652,7 +13652,7 @@ Series.prototype = {
 	},
 
 	/**
-	 * Get the graph path
+	 * Get the graph_container path
 	 */
 	getGraphPath: function () {
 		var series = this,
@@ -13660,12 +13660,12 @@ Series.prototype = {
 			segmentPath,
 			singlePoints = []; // used in drawTracker
 
-		// Divide into segments and build graph and area paths
+		// Divide into segments and build graph_container and area paths
 		each(series.segments, function (segment) {
 
 			segmentPath = series.getSegmentPath(segment);
 
-			// add the segment to the graph, or a single point for tracking
+			// add the segment to the graph_container, or a single point for tracking
 			if (segment.length > 1) {
 				graphPath = graphPath.concat(segmentPath);
 			} else {
@@ -13682,7 +13682,7 @@ Series.prototype = {
 	},
 
 	/**
-	 * Draw the actual graph
+	 * Draw the actual graph_container
 	 */
 	drawGraph: function () {
 		var series = this,
@@ -13698,7 +13698,7 @@ Series.prototype = {
 			props.push(['graphNeg', negativeColor]);
 		}
 
-		// draw the graph
+		// draw the graph_container
 		each(props, function (prop, i) {
 			var graphKey = prop[0],
 				graph = series[graphKey],
@@ -13899,7 +13899,7 @@ Series.prototype = {
 	},
 
 	/**
-	 * Render the graph and markers
+	 * Render the graph_container and markers
 	 */
 	render: function () {
 		var series = this,
@@ -13943,7 +13943,7 @@ Series.prototype = {
 		// SVGRenderer needs to know this before drawing elements (#1089, #1795)
 		group.inverted = series.isCartesian ? chart.inverted : false;
 
-		// draw the graph if any
+		// draw the graph_container if any
 		if (series.drawGraph) {
 			series.drawGraph();
 			series.clipNeg();
@@ -14598,7 +14598,7 @@ extend(Series.prototype, {
 
 		setAnimation(animation, chart);
 
-		// Make graph animate sideways
+		// Make graph_container animate sideways
 		if (shift) {
 			each([graph, area, series.graphNeg, series.areaNeg], function (shape) {
 				if (shape) {
@@ -14995,7 +14995,7 @@ var AreaSeries = extendClass(Series, {
 	},
 	
 	/**
-	 * Draw the graph and the underlying area. This method calls the Series base
+	 * Draw the graph_container and the underlying area. This method calls the Series base
 	 * function and adds the area. The areaPath is calculated in the getSegmentPath
 	 * method called from Series.prototype.drawGraph.
 	 */
@@ -15180,7 +15180,7 @@ defaultPlotOptions.areaspline = merge(defaultPlotOptions.area);
 var areaProto = AreaSeries.prototype,
 	AreaSplineSeries = extendClass(SplineSeries, {
 		type: 'areaspline',
-		closedStacks: true, // instead of following the previous graph back, follow the threshold back
+		closedStacks: true, // instead of following the previous graph_container back, follow the threshold back
 		
 		// Mix in methods from the area series
 		getSegmentPath: areaProto.getSegmentPath,
@@ -15436,7 +15436,7 @@ var ColumnSeries = extendClass(Series, {
 	
 	
 	/**
-	 * Columns have no graph
+	 * Columns have no graph_container
 	 */
 	drawGraph: noop,
 
@@ -16807,7 +16807,7 @@ var TrackerMixin = Highcharts.TrackerMixin = {
 					target = target.parentNode;
 				}
 
-				if (point !== UNDEFINED && point !== chart.hoverPoint) { // undefined on graph in scatterchart
+				if (point !== UNDEFINED && point !== chart.hoverPoint) { // undefined on graph_container in scatterchart
 					point.onMouseOver(e);
 				}
 			};
@@ -16842,7 +16842,7 @@ var TrackerMixin = Highcharts.TrackerMixin = {
 
 	/**
 	 * Draw the tracker object that sits above all data labels and markers to
-	 * track mouse events on the graph or points. For the line type charts
+	 * track mouse events on the graph_container or points. For the line type charts
 	 * the tracker uses the same graphPath, but with a greater stroke width
 	 * for better control.
 	 */
@@ -17442,7 +17442,7 @@ extend(Series.prototype, {
 	},
 
 	/**
-	 * Set the state of the graph
+	 * Set the state of the graph_container
 	 */
 	setState: function (state) {
 		var series = this,
@@ -17470,7 +17470,7 @@ extend(Series.prototype, {
 				attribs = {
 					'stroke-width': lineWidth
 				};
-				// use attr because animate will cause any other animation on the graph to stop
+				// use attr because animate will cause any other animation on the graph_container to stop
 				graph.attr(attribs);
 				if (graphNeg) {
 					graphNeg.attr(attribs);
@@ -17480,7 +17480,7 @@ extend(Series.prototype, {
 	},
 
 	/**
-	 * Set the visibility of the graph
+	 * Set the visibility of the graph_container
 	 *
 	 * @param vis {Boolean} True to show the series, false to hide. If UNDEFINED,
 	 *				the visibility is toggled.
@@ -17611,14 +17611,14 @@ extend(Series.prototype, {
 	},
 
 	/**
-	 * Show the graph
+	 * Show the graph_container
 	 */
 	show: function () {
 		this.setVisible(true);
 	},
 
 	/**
-	 * Hide the graph
+	 * Hide the graph_container
 	 */
 	hide: function () {
 		this.setVisible(false);
@@ -17626,7 +17626,7 @@ extend(Series.prototype, {
 
 
 	/**
-	 * Set the selected state of the graph
+	 * Set the selected state of the graph_container
 	 *
 	 * @param selected {Boolean} True to select the series, false to unselect. If
 	 *				UNDEFINED, the selection state is toggled.

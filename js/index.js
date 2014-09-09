@@ -41,7 +41,7 @@ $(function () {
 		var gender_val = $("#gender :selected").val();
 		var country_val = $("#country :selected").val();
         var analysis_val = $("#analysis :selected").val();
-        var graph_val = $("#graph :selected").val();
+        var graph_val = $("#graph_container :selected").val();
 
 		var date1 = new Date(date_in.toString());
 		var date2 = new Date(date_out.toString());
