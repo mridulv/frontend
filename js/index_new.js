@@ -30,6 +30,14 @@ function inactiveGraphButtons() {
     });
 }
 
+function inactiveUserButtons() {
+    var group = document.getElementById("#tweet_user")
+    $('button', group).each(function () {
+        var button = $(this);
+        button.removeClass('active')
+    });
+}
+
 function getGenderVal(gender_val){
     if (gender_val == 'Male')
         return "male";
@@ -76,6 +84,7 @@ $(document).ready(function () {
         gender_val = getGenderVal(gender_val);
 
         drawSidebar();
+        drawMainbar();
 
         $('button', group).each(function () {
             var button = $(this);
@@ -83,6 +92,41 @@ $(document).ready(function () {
                 button.click();
             }
         });
+    });
+
+    $('#button_go2').click(function () {
+        entity_val = $("#entity").val();
+        drawSidebar2();
+
+        var group = $("#tweet_user");
+
+        drawSidebar2();
+
+        $('button', group).each(function () {
+            var button = $(this);
+            if (button.hasClass('active')) {
+                button.click();
+            }
+        });
+    });
+
+    $('#retweet_count').click(function () {
+        console.log("ssssss");
+        getRetweetCount();
+    });
+
+    $('#day_tweet').click(function () {
+        console.log("day button");
+        inactiveUserButtons();
+        $(this).addClass('active');
+        drawDayTweet();
+    });
+
+    $('#time_tweet').click(function () {
+        console.log("time button");
+        inactiveGraphButtons();
+        $(this).addClass('active');
+        drawTimeTweet();
     });
 
     $('#timeline_button').click(function () {
@@ -106,6 +150,74 @@ $(document).ready(function () {
         drawPieChart();
     });
 });
+
+function drawDayTweet(){
+    var val = 1;
+    drawUserPie(val);
+}
+
+function drawTimeTweet(){
+    var val = 0;
+    drawUserPie(val);
+}
+
+function getRetweetCount(){
+    console.log("sssssssssaaaaaaaas");
+    var tweet_val = $("#tweet").val();
+    var requestURL = serverAddress + "tweetrating";
+    var jsonParams = {entity: entity_val.toString(),tweet: tweet_val.toString()};
+    $.get(requestURL, jsonParams).done(function (data) {
+        var data = jQuery.parseJSON(data);
+        console.log(data);
+    });
+}
+
+function drawUserPie(val){
+    var requestURL = serverAddress + "usertweet";
+    var jsonParams = {entity: entity_val.toString(),value: val};
+    console.log(jsonParams);
+    $.get(requestURL, jsonParams).done(function (data) {
+        var pie_data = jQuery.parseJSON(data);
+        console.log(data);
+
+        $("#user_graph").empty();
+        $('#user_graph').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: 1,//null,
+                plotShadow: false
+            },
+            title: {
+                text: 'Browser market shares at a specific website, 2014'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
+            series: [
+                {
+                    type: 'pie',
+                    name: 'Value',
+                    data: pie_data
+                }
+            ]
+        });
+
+    });
+}
+
 
 function drawSidebar() {
     var date1 = new Date(date_in.toString());
@@ -136,14 +248,68 @@ function drawSidebar() {
         $("#follow").html("<i class='glyphicon glyphicon-eye-open'></i>&nbsp;"+followers);
         $("#img").html("<img src='"+img+"' class='img-responsive'>");
 
+
+        $("#keyword").empty();
         for (var i = 0; i < keywords.length; i++) {
             $("#keyword").append("<li>"+keywords[i].key+"</li>");
         }
+        $("#hashtag").empty();
         for (var i = 0; i < hashtags.length; i++) {
             $("#hashtag").append("<li>"+hashtags[i].key+"</li>");
         }
+        $("#trend").empty();
         for (var i = 0; i < trends.length; i++) {
             $("#trend").append("<li>"+trends[i].key+"</li>");
+        }
+    });
+}
+
+function drawSidebar2() {
+    var requestURL = serverAddress + "usersidebar";
+    var jsonParams = {entity: entity_val.toString()};
+    console.log(jsonParams);
+    $.get(requestURL, jsonParams).done(function (data) {
+        var obj = jQuery.parseJSON(data);
+
+        $("#user_name").html("<b>"+entity_val+"</b>");
+        $("#followers_user").html("<i class='glyphicon glyphicon-eye-open'></i>&nbsp;"+obj[0].followers);
+        $("#img2").html("<img src='"+obj[0].image+"' class='img-responsive'>");
+
+        $("#details").empty();
+        $("#details").append("<li>Average User Rating : "+obj[0].rating+"</li>");
+        $("#details").append("<li>Maximum Retweet Count : "+obj[0].retweet+"</li>");
+        $("#details").append("<li>Maximum Retweet Tweeted : "+obj[0].tweet+"</li>");
+    });
+}
+
+
+function drawMainbar() {
+    var requestURL = serverAddress + "mainbar";
+    var jsonParams = {entity: entity_val.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString()};
+    $.get(requestURL, jsonParams).done(function (data) {
+        var obj = jQuery.parseJSON(data);
+
+        var keywords_main = obj[0];
+        var hashTag_main = obj[1];
+        var influential = obj[2];
+        var correlated = obj[3];
+
+
+        $("#hash_main").empty();
+        for (var i = 0; i < hashTag_main.length; i++) {
+            $("#hash_main").append("<li><i class='fa fa-user fa-0.5x'></i>&nbsp;&nbsp;"+hashTag_main[i].key+"</li>");
+        }
+        $("#keyword_main").empty();
+        for (var i = 0; i < keywords_main.length; i++) {
+            $("#keyword_main").append("<li><i class='fa fa-user fa-0.5x'></i>&nbsp;&nbsp;"+keywords_main[i].key+"</li>");
+        }
+        $("#influential").empty();
+        for (var i = 0; i < influential.length; i++) {
+            $("#influential").append("<li><i class='fa fa-user fa-0.5x'></i>&nbsp;&nbsp;"+influential[i].user+"</li>");
+        }
+        $("#correlated").empty();
+        for (var i = 0; i < correlated.length; i++) {
+            $("#correlated").append("<li><i class='fa fa-user fa-0.5x'></i>&nbsp;&nbsp;"+correlated[i].user+"</li>");
         }
     });
 }

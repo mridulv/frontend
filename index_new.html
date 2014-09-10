@@ -176,12 +176,7 @@
                         <div class="panel-heading"><i class="fa fa-tags fa-lg "></i>&nbsp;&nbsp;<b>Hash Tags</b>
                         </div>
                         <div class="panel-body">
-                            <ul class="list-unstyled">
-                                <li><i class="fa fa-tags fa-0.5x"></i>&nbsp;&nbsp;Pictures is good</li>
-                                <li><i class="fa fa-tags fa-0.5x"></i>&nbsp;&nbsp;Pictures is good</li>
-                                <li><i class="fa fa-tags fa-0.5x"></i>&nbsp;&nbsp;Pictures is good</li>
-                                <li><i class="fa fa-tags fa-0.5x"></i>&nbsp;&nbsp;Pictures is good</li>
-                                <li><i class="fa fa-tags fa-0.5x"></i>&nbsp;&nbsp;Pictures is good</li>
+                            <ul class="list-unstyled" id="hash_main">
                             </ul>
                         </div>
                     </div>
@@ -191,12 +186,7 @@
                         <div class="panel-heading"><i
                                 class="fa fa-quote-left fa-lg "></i>&nbsp;&nbsp;<b>Keywords</b></div>
                         <div class="panel-body">
-                            <ul class="list-unstyled">
-                                <li><i class="fa fa-quote-left fa-0.5x"></i>&nbsp;&nbsp;Pictures is good</li>
-                                <li><i class="fa fa-quote-left fa-0.5x"></i>&nbsp;&nbsp;Pictures is good</li>
-                                <li><i class="fa fa-quote-left fa-0.5x"></i>&nbsp;&nbsp;Pictures is good</li>
-                                <li><i class="fa fa-quote-left fa-0.5x"></i>&nbsp;&nbsp;Pictures is good</li>
-                                <li><i class="fa fa-quote-left fa-0.5x"></i>&nbsp;&nbsp;Pictures is good</li>
+                            <ul class="list-unstyled"  id="keyword_main">
                             </ul>
                         </div>
                     </div>
@@ -206,12 +196,7 @@
                         <div class="panel-heading"><i class="fa fa-user fa-lg "></i>&nbsp;&nbsp;<b>Influential
                             Users</b></div>
                         <div class="panel-body">
-                            <ul class="list-unstyled">
-                                <li><i class="fa fa-user fa-0.5x"></i>&nbsp;&nbsp;Pictures is good</li>
-                                <li><i class="fa fa-user fa-0.5x"></i>&nbsp;&nbsp;Pictures is good</li>
-                                <li><i class="fa fa-user fa-0.5x"></i>&nbsp;&nbsp;Pictures is good</li>
-                                <li><i class="fa fa-user fa-0.5x"></i>&nbsp;&nbsp;Pictures is good</li>
-                                <li><i class="fa fa-user fa-0.5x"></i>&nbsp;&nbsp;Pictures is good</li>
+                            <ul class="list-unstyled"  id="influential">
                             </ul>
                         </div>
                     </div>
@@ -221,12 +206,7 @@
                         <div class="panel-heading"><i class="fa fa-users fa-lg "></i>&nbsp;&nbsp;<b>Correlated
                             Users</b></div>
                         <div class="panel-body">
-                            <ul class="list-unstyled">
-                                <li><i class="fa fa-users fa-0.5x"></i>&nbsp;&nbsp;Pictures is good</li>
-                                <li><i class="fa fa-users fa-0.5x"></i>&nbsp;&nbsp;Pictures is good</li>
-                                <li><i class="fa fa-users fa-0.5x"></i>&nbsp;&nbsp;Pictures is good</li>
-                                <li><i class="fa fa-users fa-0.5x"></i>&nbsp;&nbsp;Pictures is good</li>
-                                <li><i class="fa fa-users fa-0.5x"></i>&nbsp;&nbsp;Pictures is good</li>
+                            <ul class="list-unstyled"  id="correlated">
                             </ul>
                         </div>
                     </div>
@@ -273,7 +253,7 @@
                             <input type="text" id="tweet" class="form-control"
                                    placeholder="Type the Tweet to get the Predicted ReTweets">
                                    <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button">Get Retweet Count</button>
+                                    <button class="btn btn-default" type="button" id="retweet_count">Get Retweet Count</button>
                                   </span>
                         </div>
                     </div>
@@ -297,53 +277,36 @@
                         </div>
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-md-3">
-                                    <i class="fa fa-twitter fa-3x"></i>
-                                    <!--<img src="//placehold.it/300x300" class="img-responsive">-->
+                                <div class="col-md-3" id="img2">
                                 </div>
                                 <div class="col-md-9">
                                     <div class="row">
-                                        <span data-bind="label" id="anaysis_itemsdfafa"><b>@Twitter</b></span>
+                                        <span data-bind="label" id="user_name"></span>
                                     </div>
                                     <div class="row">
                                         <div>
-                                        <span data-bind="label" id="analysdfsafafis"><i
-                                                class="glyphicon glyphicon-eye-open"></i>&nbsp;4000</span>
-                                        <span data-bind="label" id="analysdfsiafafssdf">&nbsp;<i
-                                                class="glyphicon glyphicon-tower"></i>&nbsp;7/20</span>
+                                        <span data-bind="label" id="followers_user"></span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <hr>
                             <ul class="list-unstyled">
-                                <li><i class="fa fa-tags fa-0.5x"></i>&nbsp;&nbsp;<b>Trending Hash Tags</b>
-                                    <ul class="list-unstyled">
-                                        <li>Pictures is good</li>
-                                        <li>Pictures is good</li>
-                                        <li>Pictures is good</li>
-                                        <li>Pictures is good</li>
-                                    </ul>
-                                </li>
-                                <br>
-                                <li><i class="fa fa-tags fa-0.5x"></i>&nbsp;&nbsp;<b>Trending Keywords</b>
-                                    <ul class="list-unstyled">
-                                        <li>Pictures is good</li>
-                                        <li>Pictures is good</li>
-                                        <li>Pictures is good</li>
-                                        <li>Pictures is good</li>
+                                <li><i class="fa fa-tags fa-0.5x"></i>&nbsp;&nbsp;<b>User Details</b>
+                                    <ul class="list-unstyled" id="details">
                                     </ul>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <div id="tweet_user" class="btn-group pull-right">
-                    <button id="day_tweet" type="button" class="btn btn-default active">Week Day Wise</button>
-                    <button id="time_tweet" type="button" class="btn btn-default">Hour Wise</button>
-                </div>
-                <div id="user_graph">
-
+                <div class="row">
+                    <div id="tweet_user" class="btn-group pull-right">
+                        <button id="day_tweet" type="button" class="btn btn-default active">Week Day Wise</button>
+                        <button id="time_tweet" type="button" class="btn btn-default">Hour Wise</button>
+                    </div>
+                    <div id="user_graph">
+                    </div>
                 </div>
             </div>
         </div>
