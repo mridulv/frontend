@@ -100,3 +100,12 @@
 .btn-primary.active {
     background-color: rgb(40, 94, 142);
 }
+
+textarea {
+    resize: none;
+    border : 2px solid black;
+}
+
+.min{
+    min-height: 100px;
+}

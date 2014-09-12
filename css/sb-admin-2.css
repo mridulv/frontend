@@ -372,6 +372,13 @@ table.dataTable thead .sorting:after {
     background-color: rgb(50, 118, 177);
 }
 
+.panel-blue .panel-footer{
+    border-color:  rgb(50, 118, 177);
+    color: #fff;
+    background-color: rgb(50, 118, 177);
+    cursor: pointer;
+}
+
 .panel-blue a {
     color:  rgb(50, 118, 177);
 }

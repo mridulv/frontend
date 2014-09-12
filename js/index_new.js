@@ -11,19 +11,35 @@ $(function () {
 
     $('#date_picker_start').datepicker({format: 'yyyy-mm-dd'});
     $('#date_picker_end').datepicker({format: 'yyyy-mm-dd'});
+    $(".tm-input").tagsManager();
 });
 
 $(document.body).on('click', '.dropdown-menu li', function (event) {
     var $target = $(event.currentTarget);
-    $target.closest('.btn-group')
-        .find('[data-bind="label"]').text($target.text())
+    var label = $target.closest('.btn-group')
+        .find('[data-bind="label"]');
+    label.text($target.text())
         .end()
         .children('.dropdown-toggle').dropdown('toggle');
+    label.trigger('change');
     return false;
 });
 
+$(document.body).on('change',"#analysis", function (){
+    analysis_val = $("#analysis").text();
+    analysis_val = getAnalysisVal(analysis_val);
+    var group = document.getElementById("#graph_buttons");
+    $('button', group).each(function () {
+        var button = $(this);
+        if (button.hasClass('active')) {
+            button.click();
+        }
+    });
+})
+
 function inactiveGraphButtons() {
-    var group = document.getElementById("#graph_buttons")
+    var group = $("#graph_buttons")
+    console.log(group);
     $('button', group).each(function () {
         var button = $(this);
         button.removeClass('active')
@@ -31,7 +47,8 @@ function inactiveGraphButtons() {
 }
 
 function inactiveUserButtons() {
-    var group = document.getElementById("#tweet_user")
+    var group = $("#tweet_user")
+    console.log(group);
     $('button', group).each(function () {
         var button = $(this);
         button.removeClass('active')
@@ -85,7 +102,6 @@ $(document).ready(function () {
         gender_val = $("#gender").text();
         country_val = $("#country").text();
         analysis_val = $("#analysis").text();
-        var group = document.getElementById("#graph_buttons");
 
         analysis_val = getAnalysisVal(analysis_val);
         country_val = getCountryVal(country_val);
@@ -96,6 +112,7 @@ $(document).ready(function () {
         drawSidebar();
         drawMainbar();
 
+        var group = document.getElementById("#graph_buttons");
         $('button', group).each(function () {
             var button = $(this);
             if (button.hasClass('active')) {
@@ -120,6 +137,41 @@ $(document).ready(function () {
         });
     });
 
+    $('#timeline_button').click(function () {
+        console.log("timeline button");
+        inactiveGraphButtons();
+        $(this).addClass('active');
+        drawTimeline();
+    });
+
+    $('#map_button').click(function () {
+        console.log("map button");
+        inactiveGraphButtons();
+        $(this).addClass('active');
+        drawMap();
+    });
+
+    $('#pie_geo_button').click(function () {
+        console.log("pie button");
+        inactiveGraphButtons();
+        $(this).addClass('active');
+        drawPieChart(0);
+    });
+
+    $('#pie_gender_button').click(function () {
+        console.log("pie button");
+        inactiveGraphButtons();
+        $(this).addClass('active');
+        drawPieChart(1);
+    });
+
+    $('#pie_day_button').click(function () {
+        console.log("pie button");
+        inactiveGraphButtons();
+        $(this).addClass('active');
+        drawPieChart(2);
+    });
+
     $('#retweet_count').click(function () {
         entity_val = $("#entity").val();
         console.log("ssssss");
@@ -135,31 +187,11 @@ $(document).ready(function () {
 
     $('#time_tweet').click(function () {
         console.log("time button");
-        inactiveGraphButtons();
+        inactiveUserButtons();
         $(this).addClass('active');
         drawTimeTweet();
     });
 
-    $('#timeline_button').click(function () {
-        console.log("timeline button");
-        inactiveGraphButtons();
-        $(this).addClass('active');
-        drawTimeline();
-    });
-
-    $('#map_button').click(function () {
-        console.log("map button");
-        inactiveGraphButtons();
-        $(this).addClass('active');
-        drawMap();
-    });
-
-    $('#pie_button').click(function () {
-        console.log("pie button");
-        inactiveGraphButtons();
-        $(this).addClass('active');
-        drawPieChart();
-    });
 });
 
 function drawDayTweet(){
@@ -173,13 +205,14 @@ function drawTimeTweet(){
 }
 
 function getRetweetCount(){
-    console.log("sssssssssaaaaaaaas");
-    var tweet_val = $("#tweet").val();
+    var tweet_val = $("#tweet").html();
     var requestURL = serverAddress + "tweetrating";
     var jsonParams = {entity: entity_val.toString(),tweet: tweet_val.toString()};
     $.get(requestURL, jsonParams).done(function (data) {
         var data = jQuery.parseJSON(data);
         console.log(data);
+        alertify.custom = alertify.extend("custom");
+        alertify.custom("Predicted Retweet Count is : "  + data);
     });
 }
 
@@ -293,10 +326,13 @@ function drawSidebar2() {
         $("#followers_user").html("<i class='glyphicon glyphicon-eye-open'></i>&nbsp;"+obj[0].followers);
         $("#img2").html("<img src='"+obj[0].image+"' class='img-responsive'>");
 
-        $("#details").empty();
-        $("#details").append("<li>Average User Rating : "+obj[0].rating+"</li>");
-        $("#details").append("<li>Maximum Retweet Count : "+obj[0].retweet+"</li>");
-        $("#details").append("<li>Maximum Retweet Tweeted : "+obj[0].tweet+"</li>");
+        $("#details_rating").empty();
+
+        $("#details_rating").append("<li>Average User Rating : "+obj[0].rating+"</li>");
+        $("#details_rating").append("<li>Maximum Retweet Count : "+obj[0].retweet+"</li>");
+
+        $("#details_tweet").empty();
+        $("#details_tweet").append(obj[0].tweet);
     });
 }
 
@@ -471,10 +507,8 @@ function drawMap() {
     });
 }
 
-function drawPieChart() {
-    var pie_val = $("input[name=radioGroup3]:checked").val();
+function drawPieChart(pie_val) {
     console.log(pie_val);
-    pie_val = "0";
     var str = serverAddress + "pie";
     var jsonObject = {entity: entity_val.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString(), pie: pie_val.toString(),analysis:analysis_val};
 
