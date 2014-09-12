@@ -1,5 +1,5 @@
-//var serverAddress = "http://172.16.137.125:8080/";
-var serverAddress = "http://localhost:8080/";
+var serverAddress = "http://172.16.137.125:8080/";
+//var serverAddress = "http://localhost:8080/";
 var date_in;
 var date_out;
 var entity_val;
@@ -69,6 +69,14 @@ function getCountryVal(country_val){
         return "DE";
 }
 
+
+function clearProcessing()
+{
+    $(".processing").addClass("text-center");
+    $(".processing").html("<span class='fa fa-spinner fa-spin fa-3x'></span>");
+}
+
+
 $(document).ready(function () {
     $('#button_go').click(function () {
         date_in = $('#date_picker_start').datepicker({ dateFormat: 'yy-mm-dd' }).val();
@@ -82,6 +90,8 @@ $(document).ready(function () {
         analysis_val = getAnalysisVal(analysis_val);
         country_val = getCountryVal(country_val);
         gender_val = getGenderVal(gender_val);
+
+        clearProcessing();
 
         drawSidebar();
         drawMainbar();
@@ -111,6 +121,7 @@ $(document).ready(function () {
     });
 
     $('#retweet_count').click(function () {
+        entity_val = $("#entity").val();
         console.log("ssssss");
         getRetweetCount();
     });
@@ -250,14 +261,21 @@ function drawSidebar() {
 
 
         $("#keyword").empty();
+        $("#keyword").removeClass("text-center");
+        $("#keyword").addClass("custom-margin-left");
         for (var i = 0; i < keywords.length; i++) {
             $("#keyword").append("<li>"+keywords[i].key+"</li>");
         }
+
         $("#hashtag").empty();
+        $("#hashtag").removeClass("text-center");
+        $("#hashtag").addClass("custom-margin-left");
         for (var i = 0; i < hashtags.length; i++) {
             $("#hashtag").append("<li>"+hashtags[i].key+"</li>");
         }
         $("#trend").empty();
+        $("#trend").removeClass("text-center");
+        $("#trend").addClass("custom-margin-left");
         for (var i = 0; i < trends.length; i++) {
             $("#trend").append("<li>"+trends[i].key+"</li>");
         }
@@ -296,20 +314,24 @@ function drawMainbar() {
 
 
         $("#hash_main").empty();
+        $("#hash_main").removeClass("text-center");
         for (var i = 0; i < hashTag_main.length; i++) {
-            $("#hash_main").append("<li><i class='fa fa-user fa-0.5x'></i>&nbsp;&nbsp;"+hashTag_main[i].key+"</li>");
+            $("#hash_main").append("<li><i class='fa fa-tags fa-0.5x'></i>&nbsp;&nbsp;"+hashTag_main[i].key+"</li>");
         }
         $("#keyword_main").empty();
+        $("#keyword_main").removeClass("text-center");
         for (var i = 0; i < keywords_main.length; i++) {
-            $("#keyword_main").append("<li><i class='fa fa-user fa-0.5x'></i>&nbsp;&nbsp;"+keywords_main[i].key+"</li>");
+            $("#keyword_main").append("<li><i class='fa fa-quote-left fa-0.5x'></i>&nbsp;&nbsp;"+keywords_main[i].key+"</li>");
         }
         $("#influential").empty();
+        $("#influential").removeClass("text-center");
         for (var i = 0; i < influential.length; i++) {
             $("#influential").append("<li><i class='fa fa-user fa-0.5x'></i>&nbsp;&nbsp;"+influential[i].user+"</li>");
         }
         $("#correlated").empty();
+        $("#correlated").removeClass("text-center");
         for (var i = 0; i < correlated.length; i++) {
-            $("#correlated").append("<li><i class='fa fa-user fa-0.5x'></i>&nbsp;&nbsp;"+correlated[i].user+"</li>");
+            $("#correlated").append("<li><i class='fa fa-users fa-0.5x'></i>&nbsp;&nbsp;"+correlated[i].user+"</li>");
         }
     });
 }

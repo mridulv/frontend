@@ -12,6 +12,7 @@
     <link href="css/jquery-jvectormap-1.2.2.css" rel="stylesheet">
     <link href="css/sb-admin-2.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
     <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -21,16 +22,8 @@
 <header class="navbar navbar-default navbar-static-top" role="banner">
     <div class="container">
         <div class="navbar-header">
-            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a href="/" class="navbar-brand">Tweet Analyzer</a>
+            <span class="navbar-brand">Tweet Analyzer</span>
         </div>
-        <nav class="collapse navbar-collapse" role="navigation">
-        </nav>
     </div>
 </header>
 
@@ -128,7 +121,7 @@
     </form>
     <hr>
     <div class="row">
-        <div class="col-md-3" id="leftCol">
+        <div class="col-md-3 custom-grey-text" id="leftCol">
             <div class="panel panel-blue">
                 <div class="panel-heading">
                     <i class="fa fa-info-circle fa-lg "></i>&nbsp;&nbsp;<b>Information</b>
@@ -151,18 +144,18 @@
                     </div>
                     <hr>
                     <ul class="list-unstyled">
-                        <li><i class="fa fa-tags fa-0.5x"></i>&nbsp;&nbsp;<b>Talked About KeyWords</b>
-                            <ul class="list-unstyled" id="keyword">
+                        <li><i class="fa fa-quote-left fa-0.5x"></i>&nbsp;&nbsp;<b>Talked About KeyWords</b>
+                            <ul class="list-unstyled processing" id="keyword">
                             </ul>
                         </li>
                         <br>
                         <li><i class="fa fa-tags fa-0.5x"></i>&nbsp;&nbsp;<b>Talked About HashTags</b>
-                            <ul class="list-unstyled" id="hashtag">
+                            <ul class="list-unstyled processing" id="hashtag">
                             </ul>
                         </li>
                         <br>
                         <li><i class="fa fa-tags fa-0.5x"></i>&nbsp;&nbsp;<b>Trending HashTags</b>
-                            <ul class="list-unstyled" id="trend">
+                            <ul class="list-unstyled processing" id="trend">
                             </ul>
                         </li>
                     </ul>
@@ -170,13 +163,13 @@
             </div>
         </div>
         <div class="col-md-9">
-            <div class="row">
+            <div class="row custom-grey-text">
                 <div class="col-md-3">
                     <div class="panel panel-blue">
                         <div class="panel-heading"><i class="fa fa-tags fa-lg "></i>&nbsp;&nbsp;<b>Hash Tags</b>
                         </div>
                         <div class="panel-body">
-                            <ul class="list-unstyled" id="hash_main">
+                            <ul class="list-unstyled processing" id="hash_main">
                             </ul>
                         </div>
                     </div>
@@ -186,7 +179,7 @@
                         <div class="panel-heading"><i
                                 class="fa fa-quote-left fa-lg "></i>&nbsp;&nbsp;<b>Keywords</b></div>
                         <div class="panel-body">
-                            <ul class="list-unstyled"  id="keyword_main">
+                            <ul class="list-unstyled processing"  id="keyword_main">
                             </ul>
                         </div>
                     </div>
@@ -196,7 +189,7 @@
                         <div class="panel-heading"><i class="fa fa-user fa-lg "></i>&nbsp;&nbsp;<b>Influential
                             Users</b></div>
                         <div class="panel-body">
-                            <ul class="list-unstyled"  id="influential">
+                            <ul class="list-unstyled processing"  id="influential">
                             </ul>
                         </div>
                     </div>
@@ -206,7 +199,7 @@
                         <div class="panel-heading"><i class="fa fa-users fa-lg "></i>&nbsp;&nbsp;<b>Correlated
                             Users</b></div>
                         <div class="panel-body">
-                            <ul class="list-unstyled"  id="correlated">
+                            <ul class="list-unstyled processing"  id="correlated">
                             </ul>
                         </div>
                     </div>
@@ -219,7 +212,7 @@
                     <button id="map_button" type="button" class="btn btn-primary">Map</button>
                     <button id="pie_button" type="button" class="btn btn-primary">PieChart</button>
                 </div>
-                <div id="graph_container"></div>
+                <div id="graph_container" class="custom-graph-size"></div>
             </div>
         </div>
     </div>
@@ -248,21 +241,21 @@
                     <div class="col-md-12">
                         <div class="input-group">
                                   <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button">T</button>
+                                    <button class="btn btn-primary" type="button">T</button>
                                   </span>
                             <input type="text" id="tweet" class="form-control"
                                    placeholder="Type the Tweet to get the Predicted ReTweets">
                                    <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button" id="retweet_count">Get Retweet Count</button>
+                                    <button class="btn btn-primary" type="button" id="retweet_count">Get Retweet Count</button>
                                   </span>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="btn-toolbar col-md-6 pull-right">
-                        <button type="button" id="button_go2" class="btn btn-default pull-right">Get User Analysis
+                        <button type="button" id="button_go2" class="btn btn-primary pull-right">Get User Analysis
                         </button>
-                        <button type="button" class="btn btn-default pull-right"
+                        <button type="button" class="btn btn-primary pull-right"
                                 data-toggle="collapse" data-target="#toggle-example2">More
                         </button>
                     </div>
@@ -302,8 +295,8 @@
                 </div>
                 <div class="row">
                     <div id="tweet_user" class="btn-group pull-right">
-                        <button id="day_tweet" type="button" class="btn btn-default active">Week Day Wise</button>
-                        <button id="time_tweet" type="button" class="btn btn-default">Hour Wise</button>
+                        <button id="day_tweet" type="button" class="btn btn-primary active">Week Day Wise</button>
+                        <button id="time_tweet" type="button" class="btn btn-primary">Hour Wise</button>
                     </div>
                     <div id="user_graph">
                     </div>
