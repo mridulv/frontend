@@ -340,12 +340,12 @@ function drawTimeline() {
     var date1 = new Date(date_in.toString());
     var date2 = new Date(date_out.toString());
     var requestURL = serverAddress + "graph";
-    var jsonParams = {entity: entity_val.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString()};
+    var jsonParams = {entity: entity_val.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString(),analysis:analysis_val};
 
     if ($("input[name=radioGroup]:checked").val() == 'double') {
         requestURL = serverAddress + "graphcompare";
         var entity_val2 = $("#entity_second").val();
-        jsonParams = {entity: entity_val.toString(), entity2: entity_val2.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString()};
+        jsonParams = {entity: entity_val.toString(), entity2: entity_val2.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString(),analysis:analysis_val};
     }
     console.log(jsonParams);
     $.get(requestURL, jsonParams).done(function (data) {
@@ -432,13 +432,13 @@ function drawTimeline() {
 function drawMap() {
     var set = 0;
     var str = serverAddress + "map";
-    var jsonObject = {entity: entity_val.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString()};
+    var jsonObject = {entity: entity_val.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString(),analysis:analysis_val};
 
     if ($("input[name=radioGroup]:checked").val() == 'double') {
         set = 1;
         str = serverAddress + "mapcompare";
         var entity_val2 = $("#entity_second").val();
-        jsonObject = {entity: entity_val.toString(), entity2: entity_val2.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString()};
+        jsonObject = {entity: entity_val.toString(), entity2: entity_val2.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString(),analysis:analysis_val};
     }
 
     $.get(str, jsonObject).done(function (data) {
@@ -476,12 +476,12 @@ function drawPieChart() {
     console.log(pie_val);
     pie_val = "0";
     var str = serverAddress + "pie";
-    var jsonObject = {entity: entity_val.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString(), pie: pie_val.toString()};
+    var jsonObject = {entity: entity_val.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString(), pie: pie_val.toString(),analysis:analysis_val};
 
     if ($("input[name=radioGroup]:checked").val() == 'double') {
         str = serverAddress + "piecompare";
         var entity_val2 = $("#entity_second").val();
-        jsonObject = {entity: entity_val.toString(), entity2: entity_val2.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString()};
+        jsonObject = {entity: entity_val.toString(), entity2: entity_val2.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString(),analysis:analysis_val};
     }
 
     $.get(str, jsonObject).done(function (data) {
