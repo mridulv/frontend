@@ -42,7 +42,7 @@ $(document.body).on('click', '.dropdown-menu li', function (event) {
 $(document.body).on('change',"#analysis", function (){
     analysis_val = $("#analysis").text();
     analysis_val = getAnalysisVal(analysis_val);
-    var group = document.getElementById("#graph_buttons");
+    var group = $("#graph_buttons");
     $('button', group).each(function () {
         var button = $(this);
         if (button.hasClass('active')) {
@@ -381,6 +381,7 @@ function drawComparePie(pie_val) {
     var date1 = new Date(date_in.toString());
     var date2 = new Date(date_out.toString());
     var requestURL = serverAddress + "compare_pie";
+
 
     entity_val = comparison_val;
     var entities = entity_val.split(",");
@@ -774,6 +775,8 @@ function drawMap() {
                 el.html(el.html() + str_map);
             }
         });
+        $('.jvectormap-container').minWidth("700px");
+        $('.jvectormap-container').minHeight("500px");
     });
 }
 

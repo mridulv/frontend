@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jVectorMap demo</title>
+    <link rel="stylesheet" href="jquery-jvectormap-1.0.css" type="text/css" media="screen"/>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="js/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="js/jquery-jvectormap-world-mill-en.js"></script>
+</head>
+<body>
+<div id="world-map"></div>
+<button type="button" id="button_go2">Get User Analysis
+</button>
+<script>
+    $(function(){
+        $("#button_go2").click(function(){
+            $('#world-map').vectorMap();
+        });
+    });
+</script>
+</body>
+</html>
