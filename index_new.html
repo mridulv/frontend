@@ -15,6 +15,9 @@
     <link href="css/alertify.core.css" rel="stylesheet">
     <link href="css/alertify.bootstrap.css" rel="stylesheet">
     <link href="css/alertify.default.css" rel="stylesheet">
+    <link href="css/bootstrap-tagsinput.css" rel="stylesheet">
+    <link href="css/chosen.css" rel="stylesheet"/>
+    <link href="css/chosen-bootstrap.css" rel="stylesheet"/>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
     <!--[if lt IE 9]>
@@ -105,6 +108,29 @@
                                 <li><a href="#">Female</a></li>
                                 <li><a href="#">All</a></li>
                             </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <span class="input-group-addon primary"><i class="fa fa-twitter fa-lg"></i></span>
+                            <select data-placeholder="  Choose a Country" class="chosen-select form-control" multiple>
+                                <option value=""></option>
+                                <option value="United States">United States</option>
+                                <option value="United Kingdom">United Kingdom</option>
+                                <option value="Afghanistan">Afghanistan</option>
+                                <option value="Albania">Albania</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                </br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <span class="input-group-addon primary"><b>Compare with</b></i></span>
+                            <input id="compare_tags" type="text" class="custom-compare-tags form-control" data-role="tagsinput"/>
                         </div>
                     </div>
                 </div>
@@ -336,6 +362,8 @@
 <script src="js/jquery-jvectormap-1.1.1.min.js"></script>
 <script src="js/jquery-jvectormap-world-mill-en.js"></script>
 <script src="js/tagmanager.js"></script>
+<script src="js/bootstrap-tagsinput.js"></script>
+<script src="js/chosen.jquery.js"></script>
 <script src="js/index_new.js"></script>
 <script src="js/alertify.js"></script>
 </body>
