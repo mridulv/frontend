@@ -103,6 +103,9 @@ $(document).ready(function () {
         country_val = $("#country").text();
         analysis_val = $("#analysis").text();
 
+        // define in this scope
+        comparison_val = "@google,@facebook,@twitter,#news";
+
         analysis_val = getAnalysisVal(analysis_val);
         country_val = getCountryVal(country_val);
         gender_val = getGenderVal(gender_val);
@@ -123,10 +126,9 @@ $(document).ready(function () {
 
     $('#button_go2').click(function () {
         entity_val = $("#entity").val();
-        drawSidebar2();
-
         var group = $("#tweet_user");
 
+        console.log(entity_val);
         drawSidebar2();
 
         $('button', group).each(function () {
@@ -193,6 +195,201 @@ $(document).ready(function () {
     });
 
 });
+
+function drawCompareTimeline() {
+    var date1 = new Date(date_in.toString());
+    var date2 = new Date(date_out.toString());
+    var requestURL = serverAddress + "compare_timeline";
+
+    entity_val = comparison_val;
+    var entities = entity_val.split(",");
+
+    var jsonParams = {entity: entity_val.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString(),analysis:analysis_val};
+
+    console.log(jsonParams);
+    $.get(requestURL, jsonParams).done(function (data) {
+        console.log(data);
+        var obj = jQuery.parseJSON(data);
+        console.log(obj);
+        var graph = new Array();
+        console.log(obj.length);
+        for (var j = 0; j < obj.length; j++) {
+            var graph_data = new Array();
+            for (var i = 0; i < obj[j].length; i++) {
+                graph_data[i] = obj[j][i].val / obj[j].length;
+            }
+            graph[j] = {
+                type: 'area',
+                name: 'Mentions of ' + entities[j],
+                pointInterval: (date2.getTime() - date1.getTime()) / obj[j].length,
+                pointStart: date1.getTime(),
+                data: graph_data
+            };
+        }
+        console.log(graph);
+
+        $('#graph_container').highcharts({
+            chart: {
+                zoomType: 'x'
+            },
+            title: {
+                text: 'Mention of the Twitter Handle : "' + entity_val + ' " '
+            },
+            subtitle: {
+                text: document.ontouchstart === undefined ?
+                    'Click and drag in the plot area to zoom in' :
+                    'Pinch the chart to zoom in'
+            },
+            xAxis: {
+                type: 'datetime',
+                minRange: 14  // fourteen days
+            },
+            yAxis: {
+                title: {
+                    text: 'Mentions '
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                area: {
+                    fillColor: {
+                        linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1},
+                        stops: [
+                            [0, Highcharts.getOptions().colors[0]],
+                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                        ]
+                    },
+                    marker: {
+                        radius: 2
+                    },
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
+
+            series: graph
+        });
+    });
+}
+
+function drawCompareMap() {
+    var date1 = new Date(date_in.toString());
+    var date2 = new Date(date_out.toString());
+    var requestURL = serverAddress + "compare_map";
+
+    entity_val = comparison_val;
+    var entities = entity_val.split(",");
+
+    var jsonParams = {entity: entity_val.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString(),analysis:analysis_val};
+
+    console.log(jsonParams);
+    $.get(requestURL, jsonParams).done(function (data) {
+
+        var map_data = jQuery.parseJSON(data);
+        console.log(map_data);
+        var put_data = {};
+        var check_data = {};
+        var dominate_data = {}
+        for (var i = 0; i < map_data.length; i++){
+            $.each(map_data[i], function(k, v) {
+                if (!(put_data.hasOwnProperty(k))) {
+                    check_data[k] = v;
+                    put_data[k] = i + 1;
+                    dominate_data[k] = entities[i];
+                }
+                else {
+                    if (check_data[k] < v) {
+                        put_data[k] = i + 1;
+                        check_data[k] = v;
+                        dominate_data[k] = entities[i];
+                    }
+                }
+            });
+        }
+        console.log(map_data);
+        $("#graph_container").empty();
+        $('#graph_container').vectorMap({
+            map: 'world_mill_en',
+            series: {
+                regions: [
+                    {
+                        values: put_data,
+                        scale: ['#C8EEFF', '#0071A4'],
+                        normalizeFunction: 'polynomial'
+                    }
+                ]
+            },
+            onRegionLabelShow: function (e, el, code) {
+                var str_map = ' (Domination number of Mentions from ' + code + ' are from ' + dominate_data[code];
+                str_map = str_map + ')';
+                el.html(el.html() + str_map);
+            }
+        });
+    });
+}
+
+function drawComparePie(pie_val) {
+    var date1 = new Date(date_in.toString());
+    var date2 = new Date(date_out.toString());
+    var requestURL = serverAddress + "compare_pie";
+
+    entity_val = comparison_val;
+    var entities = entity_val.split(",");
+
+    var jsonParams = {entity: entity_val.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString(), pie: pie_val.toString(),analysis:analysis_val};
+
+    console.log(jsonParams);
+    $.get(requestURL, jsonParams).done(function (data) {
+
+        var pie_data = jQuery.parseJSON(data);
+        console.log(pie_data);
+
+        $("#graph_container").empty();
+        for (var i = 0; i<pie_data.length ; i++) {
+            $("#graph_container").append("<div class='col-md-12' id='pie" + i + "'></div>");
+            $('#pie' + i).highcharts({
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: 1,//null,
+                    plotShadow: false
+                },
+                title: {
+                    text: '---- Distribution of --- of Entity ' + entities[i]
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                            }
+                        }
+                    }
+                },
+                series: [
+                    {
+                        type: 'pie',
+                        name: 'Value',
+                        data: pie_data[i]
+                    }
+                ]
+            });
+        }
+    });
+}
 
 function drawDayTweet(){
     var val = 1;
@@ -470,13 +667,6 @@ function drawMap() {
     var str = serverAddress + "map";
     var jsonObject = {entity: entity_val.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString(),analysis:analysis_val};
 
-    if ($("input[name=radioGroup]:checked").val() == 'double') {
-        set = 1;
-        str = serverAddress + "mapcompare";
-        var entity_val2 = $("#entity_second").val();
-        jsonObject = {entity: entity_val.toString(), entity2: entity_val2.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString(),analysis:analysis_val};
-    }
-
     $.get(str, jsonObject).done(function (data) {
 
         var map_data = jQuery.parseJSON(data);
@@ -496,10 +686,6 @@ function drawMap() {
             },
             onRegionLabelShow: function (e, el, code) {
                 var str_map = ' (Number of Mentions from ' + code + ' are - ' + map_data1[code];
-                if (set == 1) {
-                    var map_data2 = map_data[1];
-                    str_map = str_map + ' and Number of Mentions from ' + code + ' are - ' + map_data2[code] + ')';
-                }
                 str_map = str_map + ')';
                 el.html(el.html() + str_map);
             }
