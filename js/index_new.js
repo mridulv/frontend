@@ -107,6 +107,7 @@ function clearProcessing()
 $(document).ready(function () {
     $('#button_go').click(function () {
         date_in = $('#date_picker_start').datepicker({ dateFormat: 'yy-mm-dd' }).val();
+        drawdate_in = $('#date_picker_start').datepicker({ dateFormat: 'yy-mm-dd' }).val();
         date_out = $('#date_picker_end').datepicker({ dateFormat: 'yy-mm-dd' }).val();
         entity_val = $("#entity_first").val();
         gender_val = $("#gender").text();
