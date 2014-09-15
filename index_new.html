@@ -245,9 +245,22 @@
                             <button id="pie_gender_button" type="button" class="btn btn-primary">PieChart Gender</button>
                             <button id="pie_day_button" type="button" class="btn btn-primary">PieChart Day</button>
                         </div>
-                        </br>
-                        <div id="graph_container" class="custom-graph-size"></div>
                     </div>
+                    </br>
+                    <div class="row" id="pie_filter_div">
+                        <div class="col-md-3 pull-right">
+                            <div class="btn-group btn-input clearfix">
+                                <button type="button" class="btn btn-primary dropdown-toggle form-control"
+                                        data-toggle="dropdown">
+                                    <span data-bind="label" id="pie_filter">Option 1</span> <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu" id="pie_filter_options">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    </br>
+                    <div id="graph_container" class="custom-graph-size"></div>
                 </div>
             </div>
         </div>

@@ -8,6 +8,8 @@ var country_val;
 var analysis_val;
 var compare_tags;
 var comparison_val;
+var isCompare;
+var pie_store;
 
 $(function () {
 
@@ -47,6 +49,11 @@ $(document.body).on('change',"#analysis", function (){
             button.click();
         }
     });
+})
+
+$(document.body).on('change',"#pie_filter", function (){
+    analysis_val = $("#pie_filter").text();
+    preComputePie(analysis_val);
 })
 
 function inactiveGraphButtons() {
@@ -116,24 +123,21 @@ $(document).ready(function () {
         country_val = $("#country").text();
         analysis_val = $("#analysis").text();
         compare_tags = $("#compare_tags").val();
-        // define in this scope
-        if(compare_tags==""){
-            comparison_val = entity_val;
-        }
-        else {
-            comparison_val = entity_val + ',' + compare_tags;
-        }
-
         analysis_val = getAnalysisVal(analysis_val);
         country_val = getCountryVal(country_val);
         gender_val = getGenderVal(gender_val);
-
+        if(compare_tags==""){
+            comparison_val = entity_val;
+            isCompare = false;
+        }
+        else {
+            comparison_val = entity_val + ',' + compare_tags;
+            isCompare = true;
+        }
 //        clearProcessing();
-//
 //        drawSidebar();
 //        drawMainbar();
-
-        var group = document.getElementById("#graph_buttons");
+        var group = $("#graph_buttons");
         $('button', group).each(function () {
             var button = $(this);
             if (button.hasClass('active')) {
@@ -161,35 +165,55 @@ $(document).ready(function () {
         console.log("timeline button");
         inactiveGraphButtons();
         $(this).addClass('active');
-        drawCompareTimeline();
+        $("#pie_filter_div").hide();
+        isCompare ? drawCompareTimeline():drawTimeline();
     });
 
     $('#map_button').click(function () {
         console.log("map button");
         inactiveGraphButtons();
         $(this).addClass('active');
-        drawCompareMap();
+        $("#pie_filter_div").hide();
+        isCompare ? drawCompareMap() : drawMap();
     });
 
     $('#pie_geo_button').click(function () {
         console.log("pie button");
         inactiveGraphButtons();
         $(this).addClass('active');
-        drawComparePie(0);
+        if(isCompare) {
+            $("#pie_filter_div").show();
+            drawComparePie(0);
+        }else{
+            $("#pie_filter_div").hide();
+            drawPieChart(0);
+        }
     });
 
     $('#pie_gender_button').click(function () {
         console.log("pie button");
         inactiveGraphButtons();
         $(this).addClass('active');
-        drawComparePie(1);
+        if(isCompare) {
+            $("#pie_filter_div").show();
+            drawComparePie(1);
+        }else{
+            $("#pie_filter_div").hide();
+            drawPieChart(1);
+        }
     });
 
     $('#pie_day_button').click(function () {
         console.log("pie button");
         inactiveGraphButtons();
         $(this).addClass('active');
-        drawComparePie(2);
+        if(isCompare) {
+            $("#pie_filter_div").show();
+            drawComparePie(2);
+        }else{
+            $("#pie_filter_div").hide();
+            drawPieChart(2);
+        }
     });
 
     $('#retweet_count').click(function () {
@@ -364,48 +388,90 @@ function drawComparePie(pie_val) {
     var jsonParams = {entity: entity_val.toString(), start: date_in.toString(), end: date_out.toString(), gender: gender_val.toString(), geo: country_val.toString(), pie: pie_val.toString(),analysis:analysis_val};
 
     console.log(jsonParams);
+    $("#graph_container").empty();
+    $("#pie_filter_options").empty();
+    $("#pie_filter").empty();
     $.get(requestURL, jsonParams).done(function (data) {
 
         var pie_data = jQuery.parseJSON(data);
         console.log(pie_data);
 
-        $("#graph_container").empty();
-        for (var i = 0; i<pie_data.length ; i++) {
-            $("#graph_container").append("<div class='col-md-12' id='pie" + i + "'></div>");
-            $('#pie' + i).highcharts({
-                chart: {
-                    plotBackgroundColor: null,
-                    plotBorderWidth: 1,//null,
-                    plotShadow: false
-                },
-                title: {
-                    text: '---- Distribution of --- of Entity ' + entities[i]
-                },
-                tooltip: {
-                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                },
-                plotOptions: {
-                    pie: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        dataLabels: {
-                            enabled: true,
-                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                            style: {
-                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                            }
-                        }
-                    }
-                },
-                series: [
-                    {
-                        type: 'pie',
-                        name: 'Value',
-                        data: pie_data[i]
-                    }
-                ]
-            });
+
+        var a = {};
+        pie_store = pie_data;
+        for (var i=0;i<pie_store.length;i++){
+            for (var j=0;j< pie_store[i].length ; j++){
+                var key = pie_store[i][j].name;
+                if (!(key in a)) {
+                    $("#pie_filter").html(key);
+                    $("#pie_filter_options").append("<li><a href='#'>"+key+"</a></li>");
+                    a[key] = 1;
+                }
+            }
         }
+        console.log(a);
+        preComputePie(key);
+    });
+}
+
+function preComputePie(str){
+    var pie_chart = [];
+    entity_val = comparison_val;
+    var entities = entity_val.split(",");
+    var sum = 0;
+    for (var i=0;i<pie_store.length;i++){
+        for (var j=0;j< pie_store[i].length ; j++){
+            if (pie_store[i][j].name == str){
+                var pie_insert = {};
+                pie_insert.name = entities[i];
+                pie_insert.y = pie_store[i][j].y;
+                sum = sum + pie_store[i][j].y;
+                pie_chart.push(pie_insert);
+            }
+        }
+    }
+
+    for (var i = 0;i < pie_chart.length ; i++){
+        pie_chart[i].y = (pie_chart[i].y)/sum;
+    }
+
+    console.log(pie_chart);
+    drawComparePieDesc(pie_chart);
+}
+
+function drawComparePieDesc(pie_chart){
+    $('#graph_container').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: 1,//null,
+            plotShadow: false
+        },
+        title: {
+            text: '---- Distribution of --- of Entity '
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [
+            {
+                type: 'pie',
+                name: 'Value',
+                data: pie_chart
+            }
+        ]
     });
 }
 
