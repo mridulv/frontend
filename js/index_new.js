@@ -6,6 +6,8 @@ var entity_val;
 var gender_val;
 var country_val;
 var analysis_val;
+var compare_tags;
+var comparison_val;
 
 $(function () {
 
@@ -113,18 +115,23 @@ $(document).ready(function () {
         gender_val = $("#gender").text();
         country_val = $("#country").text();
         analysis_val = $("#analysis").text();
-
+        compare_tags = $("#compare_tags").val();
         // define in this scope
-        comparison_val = "@google,@facebook,@twitter,#news";
+        if(compare_tags==""){
+            comparison_val = entity_val;
+        }
+        else {
+            comparison_val = entity_val + ',' + compare_tags;
+        }
 
         analysis_val = getAnalysisVal(analysis_val);
         country_val = getCountryVal(country_val);
         gender_val = getGenderVal(gender_val);
 
-        clearProcessing();
-
-        drawSidebar();
-        drawMainbar();
+//        clearProcessing();
+//
+//        drawSidebar();
+//        drawMainbar();
 
         var group = document.getElementById("#graph_buttons");
         $('button', group).each(function () {
@@ -154,35 +161,35 @@ $(document).ready(function () {
         console.log("timeline button");
         inactiveGraphButtons();
         $(this).addClass('active');
-        drawTimeline();
+        drawCompareTimeline();
     });
 
     $('#map_button').click(function () {
         console.log("map button");
         inactiveGraphButtons();
         $(this).addClass('active');
-        drawMap();
+        drawCompareMap();
     });
 
     $('#pie_geo_button').click(function () {
         console.log("pie button");
         inactiveGraphButtons();
         $(this).addClass('active');
-        drawPieChart(0);
+        drawComparePie(0);
     });
 
     $('#pie_gender_button').click(function () {
         console.log("pie button");
         inactiveGraphButtons();
         $(this).addClass('active');
-        drawPieChart(1);
+        drawComparePie(1);
     });
 
     $('#pie_day_button').click(function () {
         console.log("pie button");
         inactiveGraphButtons();
         $(this).addClass('active');
-        drawPieChart(2);
+        drawComparePie(2);
     });
 
     $('#retweet_count').click(function () {
