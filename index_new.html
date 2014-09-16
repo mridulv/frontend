@@ -4,8 +4,8 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <title>Bootstrap Sidebar</title>
-    <meta name="generator" content="Bootply"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!--<meta name="generator" content="Bootply"/>-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">-->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/datepicker.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
@@ -111,21 +111,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="input-group">
-                            <span class="input-group-addon primary"><i class="fa fa-twitter fa-lg"></i></span>
-                            <select data-placeholder="  Choose a Country" class="chosen-select form-control" multiple>
-                                <option value=""></option>
-                                <option value="United States">United States</option>
-                                <option value="United Kingdom">United Kingdom</option>
-                                <option value="Afghanistan">Afghanistan</option>
-                                <option value="Albania">Albania</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                </br>
+                <!--<div class="row">-->
+                    <!--<div class="col-md-12">-->
+                        <!--<div class="input-group">-->
+                            <!--<span class="input-group-addon primary"><i class="fa fa-twitter fa-lg"></i></span>-->
+                            <!--<select data-placeholder="  Choose a Country" class="chosen-select form-control" multiple>-->
+                                <!--<option value=""></option>-->
+                                <!--<option value="United States">United States</option>-->
+                                <!--<option value="United Kingdom">United Kingdom</option>-->
+                                <!--<option value="Afghanistan">Afghanistan</option>-->
+                                <!--<option value="Albania">Albania</option>-->
+                            <!--</select>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--</br>-->
                 <div class="row">
                     <div class="col-md-12">
                         <div class="input-group">
@@ -170,11 +170,15 @@
                                     <ul class="list-unstyled processing" id="hashtag">
                                     </ul>
                                 </li>
-                                <br>
-                                <li><i class="fa fa-tags fa-0.5x"></i>&nbsp;&nbsp;<b>Trending HashTags</b>
-                                    <ul class="list-unstyled processing" id="trend">
-                                    </ul>
-                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel panel-blue">
+                        <div class="panel-heading">
+                            <i class="fa fa-tags fa-lg "></i>&nbsp;&nbsp;<b>Trending HashTags</b>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-unstyled processing" id="trend">
                             </ul>
                         </div>
                     </div>
@@ -283,10 +287,8 @@
                             <input type="text" id="entity" class="form-control" placeholder="Username">
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="btn-toolbar col-md-6 pull-right">
-                        <button type="button" id="button_go2" class="btn btn-primary pull-right">Get User Analysis
+                    <div class="btn-toolbar col-md-3">
+                        <button type="button" id="button_go2" class="btn btn-primary">Get User Analysis
                         </button>
                     </div>
                 </div>
@@ -317,7 +319,7 @@
                                 <hr>
                                 <ul class="list-unstyled">
                                     <li><i class="fa fa-tags fa-0.5x"></i>&nbsp;&nbsp;<b>User Details</b>
-                                        <ul class="list-unstyled" id="details_rating">
+                                        <ul class="list-unstyled processing" id="details_rating">
                                         </ul>
                                     </li>
                                 </ul>
@@ -327,7 +329,7 @@
                     <div class="row">
                         <div class="panel panel-blue">
                             <div class="panel-heading">
-                                <i class="fa fa-info-circle fa-lg "></i>&nbsp;&nbsp;<b>Famous Tweet</b>
+                                <i class="fa fa-quote-left fa-lg "></i>&nbsp;&nbsp;<b>Famous Tweet</b>
                             </div>
                             <div class="panel-body">
                                 <p id="details_tweet"></p>
@@ -352,9 +354,9 @@
                             <button id="day_tweet" type="button" class="btn btn-primary active">Week Day Wise</button>
                             <button id="time_tweet" type="button" class="btn btn-primary">Hour Wise</button>
                         </div>
-                        </br>
-                        <div id="user_graph"class="custom-graph-size"></div>
                     </div>
+                    </br>
+                    <div id="user_graph"class="custom-graph-size"></div>
                 </div>
             </div>
         </div>

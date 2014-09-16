@@ -1,5 +1,7 @@
-var serverAddress = "http://172.16.137.125:8080/";
+//var serverAddress = "http://172.16.137.125:8080/";
 //var serverAddress = "http://localhost:8080/";
+var serverAddress = "http://172.16.137.125:8080/";
+//v      ar serverAddress = "http://192.168.1.5:8080/";
 var date_in;
 var date_out;
 var entity_val;
@@ -134,9 +136,9 @@ $(document).ready(function () {
             comparison_val = entity_val + ',' + compare_tags;
             isCompare = true;
         }
-//        clearProcessing();
-//        drawSidebar();
-//        drawMainbar();
+        clearProcessing();
+        drawSidebar();
+        drawMainbar();
         var group = $("#graph_buttons");
         $('button', group).each(function () {
             var button = $(this);
@@ -261,7 +263,6 @@ function drawCompareTimeline() {
                 graph_data[i] = obj[j][i].val / obj[j].length;
             }
             graph[j] = {
-                type: 'area',
                 name: 'Mentions of ' + entities[j],
                 pointInterval: (date2.getTime() - date1.getTime()) / obj[j].length,
                 pointStart: date1.getTime(),
@@ -292,30 +293,8 @@ function drawCompareTimeline() {
                 }
             },
             legend: {
-                enabled: false
+                enabled: true
             },
-            plotOptions: {
-                area: {
-                    fillColor: {
-                        linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1},
-                        stops: [
-                            [0, Highcharts.getOptions().colors[0]],
-                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                        ]
-                    },
-                    marker: {
-                        radius: 2
-                    },
-                    lineWidth: 1,
-                    states: {
-                        hover: {
-                            lineWidth: 1
-                        }
-                    },
-                    threshold: null
-                }
-            },
-
             series: graph
         });
     });
@@ -592,7 +571,7 @@ function drawSidebar() {
         $("#trend").removeClass("text-center");
         $("#trend").addClass("custom-margin-left");
         for (var i = 0; i < trends.length; i++) {
-            $("#trend").append("<li>"+trends[i].key+"</li>");
+            $("#trend").append("<li><i class='fa fa-tags fa-0.5x'></i>&nbsp;&nbsp;"+trends[i].key+"</li>");
         }
     });
 }
@@ -609,9 +588,10 @@ function drawSidebar2() {
         $("#img2").html("<img src='"+obj[0].image+"' class='img-responsive'>");
 
         $("#details_rating").empty();
-
-        $("#details_rating").append("<li>Average User Rating : "+obj[0].rating+"</li>");
-        $("#details_rating").append("<li>Maximum Retweet Count : "+obj[0].retweet+"</li>");
+        $("#details_rating").removeClass("text-center");
+        $("#details_rating").addClass("custom-margin-left-little");
+        $("#details_rating").append("<li>Average Retweet : "+obj[0].rating+"</li>");
+        $("#details_rating").append("<li>Maximum Retweet : "+obj[0].retweet+"</li>");
 
         $("#details_tweet").empty();
         $("#details_tweet").append(obj[0].tweet);
@@ -675,7 +655,6 @@ function drawTimeline() {
             graph_data[i] = obj[0][i].val / obj[0].length;
         }
         graph[0] = {
-            type: 'area',
             name: 'Mentions of ' + entity_val,
             pointInterval: (date2.getTime() - date1.getTime()) / obj[0].length,
             pointStart: date1.getTime(),
@@ -687,7 +666,6 @@ function drawTimeline() {
                 graph_data_2[i] = obj[1][i].val / obj[1].length;
             }
             graph[1] = {
-                type: 'area',
                 name: 'Mentions of ' + entity_val2,
                 pointInterval: (date2.getTime() - date1.getTime()) / obj[1].length,
                 pointStart: date1.getTime(),
@@ -718,30 +696,8 @@ function drawTimeline() {
                 }
             },
             legend: {
-                enabled: false
+                enabled: true
             },
-            plotOptions: {
-                area: {
-                    fillColor: {
-                        linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1},
-                        stops: [
-                            [0, Highcharts.getOptions().colors[0]],
-                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                        ]
-                    },
-                    marker: {
-                        radius: 2
-                    },
-                    lineWidth: 1,
-                    states: {
-                        hover: {
-                            lineWidth: 1
-                        }
-                    },
-                    threshold: null
-                }
-            },
-
             series: graph
         });
     });
@@ -764,7 +720,7 @@ function drawMap() {
                 regions: [
                     {
                         values: map_data1,
-                        scale: ['#C8EEFF', '#0071A4'],
+                        scale: {'1' : '#C8EEFF', 2 : '#0071A4'},
                         normalizeFunction: 'polynomial'
                     }
                 ]
@@ -775,8 +731,6 @@ function drawMap() {
                 el.html(el.html() + str_map);
             }
         });
-        $('.jvectormap-container').minWidth("700px");
-        $('.jvectormap-container').minHeight("500px");
     });
 }
 

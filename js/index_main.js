@@ -1,4 +1,5 @@
-var serverAddress = "http://172.16.137.125:8080/";
+//var serverAddress = "http://172.16.137.125:8080/";
+var serverAddress = "http://192.168.1.5:8080/";
 var date_in;
 var date_out;
 var entity_val;
