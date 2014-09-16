@@ -117,6 +117,7 @@ function clearProcessing()
 
 $(document).ready(function () {
     $('#button_go').click(function () {
+        $('#main_result').removeClass('hidden');
         date_in = $('#date_picker_start').datepicker({ dateFormat: 'yy-mm-dd' }).val();
         drawdate_in = $('#date_picker_start').datepicker({ dateFormat: 'yy-mm-dd' }).val();
         date_out = $('#date_picker_end').datepicker({ dateFormat: 'yy-mm-dd' }).val();
@@ -149,6 +150,7 @@ $(document).ready(function () {
     });
 
     $('#button_go2').click(function () {
+        $('#main_result2').removeClass('hidden');
         entity_val = $("#entity").val();
         var group = $("#tweet_user");
 
@@ -260,10 +262,10 @@ function drawCompareTimeline() {
         for (var j = 0; j < obj.length; j++) {
             var graph_data = new Array();
             for (var i = 0; i < obj[j].length; i++) {
-                graph_data[i] = obj[j][i].val / obj[j].length;
+                graph_data[i] = obj[j][i].val;
             }
             graph[j] = {
-                name: 'Mentions of ' + entities[j],
+                name: entities[j],
                 pointInterval: (date2.getTime() - date1.getTime()) / obj[j].length,
                 pointStart: date1.getTime(),
                 data: graph_data
@@ -276,7 +278,7 @@ function drawCompareTimeline() {
                 zoomType: 'x'
             },
             title: {
-                text: 'Mention of the Twitter Handle : "' + entity_val + ' " '
+                text: $('#analysis').text() + ' of the Twitter Handle : "' + entity_val + ' " '
             },
             subtitle: {
                 text: document.ontouchstart === undefined ?
@@ -289,7 +291,7 @@ function drawCompareTimeline() {
             },
             yAxis: {
                 title: {
-                    text: 'Mentions '
+                    text: $('#analysis').text()
                 }
             },
             legend: {
@@ -493,7 +495,7 @@ function drawUserPie(val){
                 plotShadow: false
             },
             title: {
-                text: 'Browser market shares at a specific website, 2014'
+                text: 'Pie Chart'
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -652,26 +654,14 @@ function drawTimeline() {
         var graph_data = new Array();
         var graph = new Array();
         for (var i = 0; i < obj[0].length; i++) {
-            graph_data[i] = obj[0][i].val / obj[0].length;
+            graph_data[i] = obj[0][i].val;
         }
         graph[0] = {
-            name: 'Mentions of ' + entity_val,
+            name: entity_val,
             pointInterval: (date2.getTime() - date1.getTime()) / obj[0].length,
             pointStart: date1.getTime(),
             data: graph_data
         };
-        if ($("input[name=radioGroup]:checked").val() == 'double') {
-            var graph_data_2 = new Array();
-            for (var i = 0; i < obj[1].length; i++) {
-                graph_data_2[i] = obj[1][i].val / obj[1].length;
-            }
-            graph[1] = {
-                name: 'Mentions of ' + entity_val2,
-                pointInterval: (date2.getTime() - date1.getTime()) / obj[1].length,
-                pointStart: date1.getTime(),
-                data: graph_data_2
-            };
-        }
         console.log(graph);
 
         $('#graph_container').highcharts({
@@ -679,7 +669,7 @@ function drawTimeline() {
                 zoomType: 'x'
             },
             title: {
-                text: 'Mention of the Twitter Handle : "' + entity_val + ' " '
+                text: $('#analysis').text() +  ' of the Twitter Handle : "' + entity_val + ' " '
             },
             subtitle: {
                 text: document.ontouchstart === undefined ?
@@ -692,7 +682,7 @@ function drawTimeline() {
             },
             yAxis: {
                 title: {
-                    text: 'Mentions '
+                    text: $('#analysis').text()
                 }
             },
             legend: {
@@ -720,7 +710,7 @@ function drawMap() {
                 regions: [
                     {
                         values: map_data1,
-                        scale: {'1' : '#C8EEFF', 2 : '#0071A4'},
+                        scale: ['#C8EEFF' , '#0071A4'],
                         normalizeFunction: 'polynomial'
                     }
                 ]
