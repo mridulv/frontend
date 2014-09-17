@@ -1,6 +1,6 @@
 //var serverAddress = "http://172.16.137.125:8080/";
-//var serverAddress = "http://localhost:8080/";
-var serverAddress = "http://172.16.137.125:8080/";
+var serverAddress = "http://localhost:8080/";
+//var serverAddress = "http://172.16.137.125:8080/";
 //v      ar serverAddress = "http://192.168.1.5:8080/";
 var date_in;
 var date_out;
@@ -360,7 +360,7 @@ function drawCompareMap() {
                 ]
             },
             onRegionLabelShow: function (e, el, code) {
-                var str_map = ' (Domination number of Mentions from ' + code + ' are from ' + dominate_data[code];
+                var str_map = ' (Domination number of '+$('#analysis').text()+' from ' + code + ' are from ' + dominate_data[code];
                 str_map = str_map + ')';
                 el.html(el.html() + str_map);
             }
@@ -485,7 +485,7 @@ function getRetweetCount(){
         var data = jQuery.parseJSON(data);
         console.log(data);
         alertify.custom = alertify.extend("custom");
-        alertify.custom("Predicted Retweet Count is : "  + data);
+        alertify.custom("Predicted Retweet Count is : "  + Math.floor(data));
     });
 }
 
@@ -726,7 +726,7 @@ function drawMap() {
                 ]
             },
             onRegionLabelShow: function (e, el, code) {
-                var str_map = ' (Number of Mentions from ' + code + ' are - ' + map_data1[code];
+                var str_map = ' (Number of '+$('#analysis').text()+' from ' + code + ' are - ' + map_data1[code];
                 str_map = str_map + ')';
                 el.html(el.html() + str_map);
             }
