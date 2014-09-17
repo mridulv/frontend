@@ -28,6 +28,12 @@ $(function () {
     for (var selector in config) {
         $(selector).chosen(config[selector]);
     }
+
+//    $('#country_list').empty();
+//    $('#country_list').append('<li><a href="#">World</a></li>');
+//    $.each(isoCountries, function(k, v) {
+//        $('#country_list').append('<li><a href="#">'+ v +'</a></li>');
+//    });
 });
 
 $(document.body).on('click', '.dropdown-menu li', function (event) {
@@ -99,6 +105,9 @@ function getAnalysisVal(analysis_val){
 function getCountryVal(country_val){
     if (country_val == 'World')
         return "world";
+//    console.log("result :" + country_id);
+//    console.log("resultsdf :" + getCountryCode(country_val));
+//    return getCountryCode(country_val)
     else if(country_val == 'India')
         return "IN";
     else if(country_val == 'USA')
@@ -128,6 +137,7 @@ $(document).ready(function () {
         compare_tags = $("#compare_tags").val();
         analysis_val = getAnalysisVal(analysis_val);
         country_val = getCountryVal(country_val);
+        console.log(country_val);
         gender_val = getGenderVal(gender_val);
         if(compare_tags==""){
             comparison_val = entity_val;
